@@ -103,6 +103,7 @@ class AppTranslations extends Translations {
           'quote_note':
               'Explain what you offer to \nyour clients and how much it will cost them. \nEasily convert accepted quotes into invoices.',
           'send': 'Send',
+          'no_customers': 'No registered customers'
         },
         'fr_FR': {
           'invoice': 'Facturation',
@@ -202,9 +203,12 @@ class AppTranslations extends Translations {
           'clear_items': 'Effacer les éléments',
           'create_manage_quotes': 'Créez et gérez des devis',
           'professionals': 'professionnels',
-          'quote_note':
-              'Expliquer ce que vous proposez à \nvos clients et combien cela leur \ncoûtera. Convertissez facilement \ndes devis acceptés en factures.',
+          'quote_note': 'Expliquer ce que vous proposez à'
+              'vos clients et combien cela leur '
+              'coûtera. Convertissez facilement '
+              'des devis acceptés en factures.',
           'send': 'Envoyer',
+          'no_customers': 'Aucun client enregistré'
         },
       };
 }

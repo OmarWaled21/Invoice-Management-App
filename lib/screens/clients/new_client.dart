@@ -68,7 +68,7 @@ class _NewClientState extends State<NewClient> {
   }
 
   // List of options to display
-  final List<String> options = ["Société privée", "Particulier", "Administration publique"];
+  final List<String> options = ["private_company".tr, "particular".tr, "public_admin".tr];
 
   // Widget for building selectable containers
   Widget _buildSelectableContainer(int index, String text) {
@@ -240,7 +240,7 @@ class _NewClientState extends State<NewClient> {
               customTextField(
                 title: '${'city'.tr} (${'optional'.tr})',
                 controller: cityController,
-                hint: '${'city'.tr}',
+                hint: 'city'.tr,
               ),
               customTextField(
                 title: '${'postal_code'.tr} (${'optional'.tr})',

@@ -46,7 +46,7 @@ class _DevisScreenState extends State<DevisScreen> {
               ),
             ),
             boldText(
-                text: 'Créez et gérez des devis',
+                text: 'create_manage_quotes'.tr,
                 fontSize: mq.aspectRatio * 50,
                 color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
             boldText(
