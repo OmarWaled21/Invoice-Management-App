@@ -24,7 +24,7 @@ class _DevisScreenState extends State<DevisScreen> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Devis',
+        title: 'quotes'.tr,
         hasLeading: true,
         iconLeading: Icons.arrow_back_ios_new_rounded,
         onPressedLeading: () {
@@ -45,24 +45,28 @@ class _DevisScreenState extends State<DevisScreen> {
                 height: mq.height * 0.2,
               ),
             ),
-            boldText(text: 'Créez et gérez des devis', fontSize: mq.aspectRatio * 50, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
-            boldText(text: 'professionnels', fontSize: mq.aspectRatio * 50, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+            boldText(
+                text: 'Créez et gérez des devis',
+                fontSize: mq.aspectRatio * 50,
+                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+            boldText(
+                text: 'professionnels',
+                fontSize: mq.aspectRatio * 50,
+                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
             SizedBox(height: mq.height * 0.01),
-            normalText(text: 'Expliquez ce que vous proposez à', fontSize: mq.aspectRatio * 40
-                , color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
-            normalText(text: 'vos clients et combien cela leur', fontSize: mq.aspectRatio * 40
-                , color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
-            normalText(text: 'coûtera. Convertissez facilement', fontSize: mq.aspectRatio * 40
-                , color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
-            normalText(text: 'des devis acceptés en factures.', fontSize: mq.aspectRatio * 40
-                , color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+            normalText(
+                text: 'quote_note'.tr,
+                fontSize: mq.aspectRatio * 40,
+                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
             SizedBox(height: mq.height * 0.03),
             SizedBox(
               width: mq.width,
               child: bottomButtonInScreen(
-                text: 'Créer un devis',
+                text: 'create_quote'.tr,
                 bgColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-                onPressed: () => Get.off(const CreerUnDevisAndFacture(isDevis: true,)),
+                onPressed: () => Get.off(const CreerUnDevisAndFacture(
+                  isDevis: true,
+                )),
                 horizontal: mq.width * 0.3,
                 top: mq.height * 0.005,
                 bottom: mq.height * 0.05,

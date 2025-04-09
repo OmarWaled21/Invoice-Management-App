@@ -19,26 +19,26 @@ class ChooseModel extends StatelessWidget {
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return PopScope(
-      onPopInvokedWithResult: (val, dynamic) async{
+      onPopInvokedWithResult: (val, dynamic) async {
         await factureController.resetToSavedModel();
       },
       child: Scaffold(
         appBar: DefaultAppbar(
-          title: 'Modéle',
+          title: 'model'.tr,
           hasLeading: true,
           onPressedLeading: () async {
             // Reset to the saved model before going back
             await factureController.resetToSavedModel();
             Get.back();
           },
-          textLeading: 'Fermer',
+          textLeading: 'close'.tr,
           hasActions: true,
           onPressedAction: () {
             // Save the selected model when "Appliquer" is pressed
             factureController.saveSelectedModel();
             Get.back();
           },
-          textAction: 'Appliquer',
+          textAction: 'apply'.tr,
         ),
         body: Container(
           width: mq.width,
@@ -51,11 +51,10 @@ class ChooseModel extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Sélectionnez un modéle dans la liste. Vous pourrez ensuite commencer à '
-                        'personnaliser votre modéle.',
-                    style: TextStyle(fontSize: mq.aspectRatio * 40,
-                      color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-                    ),
+                    'select_template_note'.tr,
+                    style: TextStyle(
+                        fontSize: mq.aspectRatio * 40,
+                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
                   ),
                   SizedBox(height: mq.height * 0.01),
                   Column(
@@ -63,7 +62,7 @@ class ChooseModel extends StatelessWidget {
                       Center(
                         child: _buildModelOption(
                           context,
-                          'Facture Model 1',
+                          '${'invoice'.tr} Model 1',
                           const FactureModel1(),
                           1,
                           factureController,
@@ -71,7 +70,7 @@ class ChooseModel extends StatelessWidget {
                       ),
                       _buildModelOption(
                         context,
-                        'Facture Model 2',
+                        '${'invoice'.tr} Model 2',
                         const FactureModel2(),
                         2,
                         factureController,
@@ -87,20 +86,25 @@ class ChooseModel extends StatelessWidget {
     );
   }
 
-  Widget _buildModelOption(BuildContext context, String label, Widget model,
-      int modelId, FactureModelController factureController) {
+  Widget _buildModelOption(BuildContext context, String label, Widget model, int modelId,
+      FactureModelController factureController) {
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return GestureDetector(
       onTap: () => factureController.setSelectedModel(modelId),
-      child: Obx(() => Container(
+      child: Obx(
+        () => Container(
           margin: EdgeInsets.only(bottom: mq.height * 0.05),
           decoration: BoxDecoration(
             border: Border.all(
                 color: factureController.selectedModel.value == modelId
-                    ? isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-                    : isLightTheme ? ColorsTheme.blackColor.withAlpha(30) : ColorsTheme.orangeColor.withAlpha(60),
+                    ? isLightTheme
+                        ? ColorsTheme.blackColor
+                        : ColorsTheme.orangeColor
+                    : isLightTheme
+                        ? ColorsTheme.blackColor.withAlpha(30)
+                        : ColorsTheme.orangeColor.withAlpha(60),
                 width: 2),
             borderRadius: BorderRadius.circular(mq.aspectRatio * 30),
           ),

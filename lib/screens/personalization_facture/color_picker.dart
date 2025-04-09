@@ -15,13 +15,12 @@ class ColorPickerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color currentColor = isForPolice
-        ? colorController.policeColor.value
-        : colorController.marqueColor.value;
+    Color currentColor =
+        isForPolice ? colorController.policeColor.value : colorController.marqueColor.value;
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Couleur de la police',
+        title: 'font_color'.tr,
         hasLeading: true,
         iconLeading: Icons.arrow_back_ios_new,
         onPressedLeading: () => Get.back(),
@@ -49,7 +48,7 @@ class ColorPickerPage extends StatelessWidget {
               onPressed: () {
                 Get.back(); // Close the color picker page
               },
-              child: const Text('Confirmer'),
+              child: Text('confirm'.tr),
             ),
           ],
         ),

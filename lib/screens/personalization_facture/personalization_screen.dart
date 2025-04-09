@@ -36,15 +36,14 @@ class _PersonalizationScreenState extends State<PersonalizationScreen> {
   @override
   Widget build(BuildContext context) {
     // Get the FactureController instance
-    final FactureModelController factureController =
-        Get.find<FactureModelController>();
+    final FactureModelController factureController = Get.find<FactureModelController>();
     final FactureController factureClear = Get.find<FactureController>();
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Personnaliser la facture',
+        title: 'customize_invoice'.tr,
         hasLeading: true,
         iconLeading: Icons.arrow_back_ios_new,
         onPressedLeading: () {
@@ -55,8 +54,7 @@ class _PersonalizationScreenState extends State<PersonalizationScreen> {
       body: Obx(() => Container(
             width: mq.width,
             height: mq.height,
-            color:
-                isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
+            color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
             child: Column(
               children: [
                 InteractiveViewer(
@@ -80,8 +78,7 @@ class _PersonalizationScreenState extends State<PersonalizationScreen> {
                           ],
                         ),
                         // Show the selected facture model based on the controller's selectedModel
-                        child: _getSelectedModel(
-                            factureController.selectedModel.value),
+                        child: _getSelectedModel(factureController.selectedModel.value),
                       ),
                     ),
                   ),
@@ -97,11 +94,9 @@ class _PersonalizationScreenState extends State<PersonalizationScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             bottomDesignModel(
-              name: 'Modéle',
+              name: 'model'.tr,
               assetIcon: Assets.iconsInvoice,
-              color: isLightTheme
-                  ? ColorsTheme.blackColor
-                  : ColorsTheme.orangeColor,
+              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
               borderColor: isLightTheme
                   ? ColorsTheme.blackColor.withAlpha(40)
                   : ColorsTheme.orangeColor.withAlpha(80),
@@ -115,16 +110,13 @@ class _PersonalizationScreenState extends State<PersonalizationScreen> {
               },
             ),
             bottomDesignModel(
-              name: 'Couleurs et polices',
+              name: 'colors_fonts'.tr,
               assetIcon: Assets.iconsPersonnaliser,
-              color: isLightTheme
-                  ? ColorsTheme.blackColor
-                  : ColorsTheme.orangeColor,
+              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
               borderColor: isLightTheme
                   ? ColorsTheme.blackColor.withAlpha(40)
                   : ColorsTheme.orangeColor.withAlpha(80),
-              onPressed: () => Get.to(const CouleursEtPolices(),
-                  transition: Transition.downToUp),
+              onPressed: () => Get.to(const CouleursEtPolices(), transition: Transition.downToUp),
             ),
           ],
         ),

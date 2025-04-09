@@ -58,7 +58,7 @@ class _ProfielScreenState extends State<ProfielScreen> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Paramètres',
+        title: 'settings'.tr,
         hasLeading: true,
         onPressedLeading: () {
           Get.back(closeOverlays: true);
@@ -92,8 +92,9 @@ class _ProfielScreenState extends State<ProfielScreen> {
                           child: CircleAvatar(
                             backgroundColor: Colors.blueAccent.withAlpha(40),
                             radius: mq.aspectRatio * 80,
-                            child: profile.image != null && profile.image!.isNotEmpty &&
-                                File(profile.image!).existsSync()
+                            child: profile.image != null &&
+                                    profile.image!.isNotEmpty &&
+                                    File(profile.image!).existsSync()
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(mq.aspectRatio * 80),
                                     // Make sure the border radius matches CircleAvatar
@@ -101,7 +102,8 @@ class _ProfielScreenState extends State<ProfielScreen> {
                                       File(profile.image!),
                                       width: mq.width,
                                       height: mq.height,
-                                      fit: BoxFit.cover, // This ensures the image covers the CircleAvatar completely
+                                      fit: BoxFit
+                                          .cover, // This ensures the image covers the CircleAvatar completely
                                     ),
                                   )
                                 : Padding(
@@ -120,7 +122,8 @@ class _ProfielScreenState extends State<ProfielScreen> {
                         right: -10,
                         child: CircleAvatar(
                           radius: mq.aspectRatio * 40,
-                          backgroundColor: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
+                          backgroundColor:
+                              isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
                           child: Image.asset(
                             Assets.iconsNewImage,
                             height: mq.height * 0.03,
@@ -136,9 +139,7 @@ class _ProfielScreenState extends State<ProfielScreen> {
                   child: Obx(() {
                     final profile = profileController.profileDetails.value;
                     return normalText(
-                      text: profile.name.isNotEmpty
-                          ? profile.name
-                          : 'Nom d\'entreprise',
+                      text: profile.name.isNotEmpty ? profile.name : 'company_name',
                       fontSize: mq.aspectRatio * 50,
                       color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
                     );
@@ -150,9 +151,7 @@ class _ProfielScreenState extends State<ProfielScreen> {
                     final profile = profileController.profileDetails.value;
                     String address = profile.address;
                     return normalText(
-                      text: address.isNotEmpty
-                          ? address
-                          : 'Adresse de l\'entreprise',
+                      text: address.isNotEmpty ? address : 'company_address'.tr,
                       fontSize: mq.aspectRatio * 40,
                       color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
                     );
@@ -163,11 +162,11 @@ class _ProfielScreenState extends State<ProfielScreen> {
                   child: const Divider(),
                 ),
                 informationProfile(
-                  title: 'Informations Professionnelles',
+                  title: 'professional_information'.tr,
                   text: 'Business details',
                   iconAsset: Assets.iconsBussinessCase,
                   onTap: () => Get.to(const BussinessDetails()),
-                  secText: 'Informations bancaires',
+                  secText: 'bank_information'.tr,
                   secIconAsset: Assets.iconsBank,
                   secOnTap: () => Get.to(const BankInformation()),
                   txtColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
@@ -177,9 +176,9 @@ class _ProfielScreenState extends State<ProfielScreen> {
                   height: mq.height * 0.02,
                 ),
                 informationProfile(
-                  title: 'TVA et Immatriculation',
+                  title: 'tva_and_registration'.tr,
                   onTap: () => Get.to(const TvaScreen()),
-                  text: 'TVA et immatriculation',
+                  text: 'tva_and_registration'.tr,
                   iconAsset: Assets.iconsTvaCer,
                   txtColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
                   iconColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
@@ -206,24 +205,27 @@ class _ProfielScreenState extends State<ProfielScreen> {
           child: Column(
             children: [
               ListTile(
-                leading: Icon(Icons.image, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,),
-                title: boldText(text: 'Choisir une image', color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
+                leading: Icon(
+                  Icons.image,
+                  color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,
+                ),
+                title: boldText(
+                    text: 'choose_image'.tr,
+                    color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
                 onTap: () async {
                   final XFile? pickedFile = await _picker.pickImage(
                     source: ImageSource.gallery,
                   );
                   if (pickedFile != null) {
                     // Update image path in the controller
-                    profileController.profileDetails.value.image =
-                        pickedFile.path;
+                    profileController.profileDetails.value.image = pickedFile.path;
 
                     // Notify listeners
-                    profileController.updateProfileDetails(
-                        profileController.profileDetails.value);
+                    profileController.updateProfileDetails(profileController.profileDetails.value);
 
                     // Optionally, save the profile details after updating the image
-                    await profileController.saveProfileDetails(
-                        profileController.profileDetails.value);
+                    await profileController
+                        .saveProfileDetails(profileController.profileDetails.value);
                     log("Image selected: ${pickedFile.path}"); // Debug log
                   } else {
                     log("No image selected"); // Debug log
@@ -232,19 +234,28 @@ class _ProfielScreenState extends State<ProfielScreen> {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.delete, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,),
-                title: boldText(text: 'Supprimer l\'image', color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
+                leading: Icon(
+                  Icons.delete,
+                  color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,
+                ),
+                title: boldText(
+                    text: 'delete_image'.tr,
+                    color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
                 onTap: () {
                   profileController.profileDetails.value.image = '';
                   // Save the updated profile details after deleting the image
-                  profileController.saveProfileDetails(
-                      profileController.profileDetails.value);
+                  profileController.saveProfileDetails(profileController.profileDetails.value);
                   Get.back(); // Close the bottom sheet
                 },
               ),
               ListTile(
-                leading: Icon(Icons.cancel, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,),
-                title: boldText(text: 'Annuler', color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
+                leading: Icon(
+                  Icons.cancel,
+                  color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor,
+                ),
+                title: boldText(
+                    text: 'cancel'.tr,
+                    color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
                 onTap: () {
                   Get.back(); // Close the bottom sheet
                 },

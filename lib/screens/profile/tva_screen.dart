@@ -26,9 +26,9 @@ class _TvaScreenState extends State<TvaScreen> {
     profileController.loadProfileDetails();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     final profile = profileController.profileDetails.value;
 
     final ThemeController themeController = Get.find<ThemeController>();
@@ -36,7 +36,7 @@ class _TvaScreenState extends State<TvaScreen> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'TVA et Immatriculation',
+        title: 'tva_and_registration'.tr,
         hasLeading: true,
         onPressedLeading: () {
           Get.back(closeOverlays: true);
@@ -60,59 +60,64 @@ class _TvaScreenState extends State<TvaScreen> {
             children: [
               SizedBox(height: mq.height * 0.05),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: mq.height * 0.01),
+                padding:
+                    EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: mq.height * 0.01),
                 width: mq.width,
                 decoration: BoxDecoration(
-                  border: Border.symmetric(horizontal: BorderSide(
-                    color: isLightTheme ? ColorsTheme.blackColor.withAlpha(20) : ColorsTheme.orangeColor.withAlpha(60),
+                  border: Border.symmetric(
+                      horizontal: BorderSide(
+                    color: isLightTheme
+                        ? ColorsTheme.blackColor.withAlpha(20)
+                        : ColorsTheme.orangeColor.withAlpha(60),
                   )),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     normalText(
-                      text: 'Appliquer la TVA',
+                      text: '${'apply'.tr} TVA',
                       fontSize: mq.aspectRatio * 40,
                       color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
                     ),
-                  Obx(() => Switch(
-                      value: tvaController.switchTVA.value,
-                      activeColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-                      onChanged: (val) => tvaController.switchTVA.value = val,
-                    ),),
+                    Obx(
+                      () => Switch(
+                        value: tvaController.switchTVA.value,
+                        activeColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
+                        onChanged: (val) => tvaController.switchTVA.value = val,
+                      ),
+                    ),
                   ],
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
                 child: thinText(
-                  text: 'Vous pouvez modifier cela dans Profil > TVA',
+                  text: 'change_tva_desc'.tr,
                   fontSize: mq.aspectRatio * 35,
                   color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
                 ),
               ),
               SizedBox(height: mq.height * 0.02),
               container2Lines(
-                leftText: "N° d'enregistrement de l'entreprise    ",
-                rightText: profile.siret ?? '',
-                isExpanded: true,
-                leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                rightColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
+                  leftText: "regestiration_num".tr,
+                  rightText: profile.siret ?? '',
+                  isExpanded: true,
+                  leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                  rightColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
               container2Lines(
-                leftText: "Numéro de TVA intracommunautaire   ",
-                rightText: profile.country,
-                isExpanded: true,
-                leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                rightColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
+                  leftText: "tva_num_intra".tr,
+                  rightText: profile.country,
+                  isExpanded: true,
+                  leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                  rightColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
               container2Lines(
-                leftText: "Numéro de registre du commerce   ",
-                rightText: 'HRB 123456',
-                isExpanded: true,
-                leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                rightColor: isLightTheme ? ColorsTheme.blackColor.withAlpha(50) : ColorsTheme.orangeColor.withAlpha(150)
-              ),
+                  leftText: "trade_number".tr,
+                  rightText: 'HRB 123456',
+                  isExpanded: true,
+                  leftColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                  rightColor: isLightTheme
+                      ? ColorsTheme.blackColor.withAlpha(50)
+                      : ColorsTheme.orangeColor.withAlpha(150)),
             ],
           ),
         ),

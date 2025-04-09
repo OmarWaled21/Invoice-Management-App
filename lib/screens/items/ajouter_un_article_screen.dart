@@ -21,8 +21,7 @@ class AjouterUnArticleScreen extends StatefulWidget {
   const AjouterUnArticleScreen({super.key, this.item, this.index});
 
   @override
-  State<AjouterUnArticleScreen> createState() =>
-      _AjouterUnArticleScreenScreenState();
+  State<AjouterUnArticleScreen> createState() => _AjouterUnArticleScreenScreenState();
 }
 
 final TextEditingController nomController = TextEditingController();
@@ -42,8 +41,26 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
 
   // List of available units
   final List<String> _units = [
-    'hour', 'day', 'month', 'each', 'carton', 'kg', 'km', 'liter', 'meter', 'm²',
-    'm³', 'night', 'package', 'ton', 'year', 'minute', 'lm', 'word', 'week',  'N/A'
+    'hour',
+    'day',
+    'month',
+    'each',
+    'carton',
+    'kg',
+    'km',
+    'liter',
+    'meter',
+    'm²',
+    'm³',
+    'night',
+    'package',
+    'ton',
+    'year',
+    'minute',
+    'lm',
+    'word',
+    'week',
+    'N/A'
   ];
 
   // Initially selected unit
@@ -74,7 +91,7 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
       priceController.text = widget.item!.price!.toString();
       _selectedTva = widget.item!.tva!.toDouble();
       _calculateTotal(); // Calculate total based on the existing item values
-    }else{
+    } else {
       // If editing, populate the fields
       nomController.text = '';
       descriptionController.text = '';
@@ -128,8 +145,7 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
     if (quantiteController.text.isNotEmpty) {
       final double? value = double.tryParse(quantiteController.text);
       if (value != null) {
-        quantiteController.text =
-            NumberFormat("#,##0.00", "fr_FR").format(value);
+        quantiteController.text = NumberFormat("#,##0.00", "fr_FR").format(value);
       }
     }
   }
@@ -179,9 +195,9 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Ajouter un article',
+        title: 'add_item'.tr,
         hasLeading: true,
-        textLeading: 'Annuler',
+        textLeading: 'candel'.tr,
         onPressedLeading: () => Get.back(),
       ),
       body: Container(
@@ -197,23 +213,23 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
               children: [
                 customTextField(
                   onChanged: (val) => itemController.updateName(val),
-                  title: 'Nom',
+                  title: 'name'.tr,
                   focusNode: _nameFocusNode,
                   controller: nomController,
-                  hint: 'Nom de votre produit ou service',
+                  hint: 'name_produce_service'.tr,
                 ),
                 customTextField(
                   onChanged: (val) => itemController.updateDescription(val),
-                  title: 'Description (facultatif)',
+                  title: 'Description (${'optional'.tr})',
                   focusNode: _descFocusNode,
                   controller: descriptionController,
-                  hint: 'p. ex. origin, composition, dimensiom',
+                  hint: 'p. ex. origin, composition, ${'dimensions'.tr}',
                 ),
                 // CupertinoPicker for unit selection
                 Padding(
                   padding: EdgeInsets.only(top: mq.height * 0.02),
                   child: CustomDropDown(
-                    title: 'Unité',
+                    title: 'unite'.tr,
                     selectedValue: _selectedUnit,
                     options: _units,
                     onSelected: (value) {
@@ -235,7 +251,7 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
                       Expanded(
                         flex: 1,
                         child: customTextField(
-                          title: 'Quantité',
+                          title: 'quantity'.tr,
                           controller: quantiteController,
                           focusNode: _quantiteFocusNode,
                           hint: '0,00',
@@ -244,8 +260,7 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
                             // Parse the string to double and then to int
                             double? quantityValue = double.tryParse(val.replaceAll(',', '.'));
                             if (quantityValue != null) {
-                              itemController.updateQuantity(
-                                  quantityValue.toInt()); // Update as int
+                              itemController.updateQuantity(quantityValue.toInt()); // Update as int
                               _calculateTotal();
                             }
                           },
@@ -253,21 +268,22 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: mq.width * 0.03),
-                        child: boldText(text: 'x', color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+                        child: boldText(
+                            text: 'x',
+                            color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
                       ),
                       Expanded(
                         flex: 2,
                         child: customTextField(
                           onChanged: (val) {
                             // Parse the string to double
-                            double? priceValue =
-                                double.tryParse(val.replaceAll(',', '.'));
+                            double? priceValue = double.tryParse(val.replaceAll(',', '.'));
                             if (priceValue != null) {
                               itemController.updatePrice(priceValue); // Update as double
                               _calculateTotal();
                             }
                           },
-                          title: 'Prix (dont taxes)',
+                          title: '${'price'.tr} (${'including'.tr} taxes)',
                           controller: priceController,
                           hint: '0,00',
                           keyboardType: TextInputType.number,
@@ -301,8 +317,12 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      boldText(text: 'Montant total', color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
-                      boldText(text: '${_totalPrice.toStringAsFixed(2)} €', color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor)
+                      boldText(
+                          text: '${'amount'.tr} total',
+                          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+                      boldText(
+                          text: '${_totalPrice.toStringAsFixed(2)} €',
+                          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor)
                     ],
                   ),
                 )
@@ -312,9 +332,9 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
         ),
       ),
       bottomNavigationBar: Container(
-        color: isLightTheme? ColorsTheme.whiteColor : ColorsTheme.blackColor,
+        color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
         child: bottomButtonInScreen(
-          text: 'Terminé',
+          text: 'finished'.tr,
           horizontal: mq.width * 0.05,
           top: mq.height * 0.01,
           bottom: mq.height * 0.05,
@@ -322,13 +342,15 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
           onPressed: () {
             log("${widget.index}");
             // Ensure all necessary fields are filled
-            if (nomController.text.isEmpty || quantiteController.text.isEmpty || priceController.text.isEmpty) {
-              Get.snackbar("Erreur", "Veuillez remplir tous les champs obligatoires.");
+            if (nomController.text.isEmpty ||
+                quantiteController.text.isEmpty ||
+                priceController.text.isEmpty) {
+              Get.snackbar("error".tr, "fill_required_fields".tr);
               return;
             }
 
             // Check if we are editing an existing item or creating a new one
-            if (widget.item != null && widget.index!= null) {
+            if (widget.item != null && widget.index != null) {
               // Update the existing item
               final updatedItem = ItemsModel(
                 id: widget.item!.id, // Use the existing item's ID
@@ -379,7 +401,8 @@ class _AjouterUnArticleScreenScreenState extends State<AjouterUnArticleScreen> {
             log(itemController.name.value);
             // Close the screen and show a success message
             Get.back(); // Closes the screen
-            Get.snackbar("Succès", widget.item != null ? "Article mis à jour avec succès !" : "Article ajouté avec succès !");
+            Get.snackbar(
+                "success".tr, widget.item != null ? "success_updated".tr : "success_added".tr);
           },
         ),
       ),

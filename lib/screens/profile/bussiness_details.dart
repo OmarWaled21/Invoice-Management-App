@@ -75,13 +75,10 @@ class BussinessDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Ces informations apparaîtront sur "
-                  "le compte rendu de vos transactions, ainsi que sur les "
-                  "récépissés. Ces données permettant "
-                  "d'identifier votre entreprise, nous vous invitons "
-                  "à contacter le service client si vous souhaitez "
-                  "les modifier.",
-                  style: TextStyle(fontSize: mq.aspectRatio * 36, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+                  "info_note".tr,
+                  style: TextStyle(
+                      fontSize: mq.aspectRatio * 36,
+                      color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
                 ),
                 Obx(
                   () {
@@ -106,27 +103,27 @@ class BussinessDetails extends StatelessWidget {
                           height: mq.height * 0.02,
                         ),
                         customTextField(
-                          title: 'Nom de l\'entrepise',
+                          title: 'company_name'.tr,
                           controller: nameController,
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Adresse ligne 1',
+                          title: '${'address_line'.tr} 1',
                           controller: addressLine1Controller,
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Adresse ligne 2',
+                          title: '${'address_line'.tr} 2',
                           controller: addressLine2Controller,
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Ville',
+                          title: 'city'.tr,
                           controller: cityController,
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Code de postal',
+                          title: 'postal_code'.tr,
                           controller: postalCodeController,
                           hint: '',
                         ),
@@ -136,12 +133,12 @@ class BussinessDetails extends StatelessWidget {
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Pays',
+                          title: 'country'.tr,
                           controller: countryController,
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Numéro de TVA (facultatif)',
+                          title: '${'tva_num'.tr} (${'optional'.tr})',
                           controller: tavNumberContriller,
                           hint: '',
                         ),
@@ -151,7 +148,7 @@ class BussinessDetails extends StatelessWidget {
                           hint: '',
                         ),
                         customTextField(
-                          title: 'Numéro de téléphone (facultatif)',
+                          title: '${'phone_number'.tr}} (${'optional'.tr})',
                           controller: phoneNumberController,
                           hint: '',
                         ),

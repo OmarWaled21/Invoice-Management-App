@@ -55,7 +55,8 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
 
   Future<void> _generatePdf() async {
     // Render widget to image
-    RenderRepaintBoundary boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage(pixelRatio: 10);
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -75,7 +76,8 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
     );
 
     // Get the device's documents directory
-    final directory = await getApplicationDocumentsDirectory(); // Default directory for app documents
+    final directory =
+        await getApplicationDocumentsDirectory(); // Default directory for app documents
     // You can choose a path inside the app's document directory or another one if needed
     final documentsDirectory = Directory(path.join(directory.path, 'MyInvoices'));
     if (!await documentsDirectory.exists()) {
@@ -93,7 +95,8 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
 
   Future<void> _printPdf() async {
     // Render widget to image
-    RenderRepaintBoundary boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage(pixelRatio: 10);
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -119,7 +122,8 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
   Future<void> _sharePdf() async {
     // Define the directory path where the PDF is saved
     final directory = await getApplicationDocumentsDirectory();
-    final filePath = path.join(directory.path, 'invoice.pdf'); // Ensure it matches the path used to save the PDF
+    final filePath =
+        path.join(directory.path, 'invoice.pdf'); // Ensure it matches the path used to save the PDF
 
     // Check if the file exists
     final file = File(filePath);
@@ -157,16 +161,16 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
         title: 'Document n° ${factureController.facture.value.invoiceNumber}',
         hasLeading: true,
         onPressedLeading: () => Get.back(),
-        textLeading: 'Fremer',
+        textLeading: 'close'.tr,
         hasActions: true,
-        onPressedAction: () async{
+        onPressedAction: () async {
           // Save facture details when OK is pressed
           await factureController.saveFactureDetails();
           factureController.incrementInvoiceNumber();
           factureController.resetDocumentDate();
           factureController.clearItems();
           factureController.clearSelectedClientId();
-          Get.snackbar('Success', 'Facture saved successfully!');
+          Get.snackbar('Success', '${'invoice'.tr} saved successfully!');
           log("Current montantTotal: ${factureController.montantTotal.value} €");
 
           Get.offAll(() => const HomeScreen());
@@ -185,26 +189,26 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
                 height: mq.height * 0.65,
                 width: mq.width * 0.9,
                 child: Container(
-                  margin: EdgeInsets.only(top: mq.height * 0.02),
-                  // Adjust padding
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(60),
-                        blurRadius: 10,
-                        offset: const Offset(0, 0),
-                        spreadRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: InteractiveViewer(
-                    maxScale: 4.0,
-                    child: RepaintBoundary(
-                      key: _globalKey,
-                      child: Obx(() => getSelectedModel(factureModelController.selectedModel.value)), // Wrap with Obx
+                    margin: EdgeInsets.only(top: mq.height * 0.02),
+                    // Adjust padding
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(60),
+                          blurRadius: 10,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 2,
+                        ),
+                      ],
                     ),
-                  )
-                ),
+                    child: InteractiveViewer(
+                      maxScale: 4.0,
+                      child: RepaintBoundary(
+                        key: _globalKey,
+                        child: Obx(() => getSelectedModel(
+                            factureModelController.selectedModel.value)), // Wrap with Obx
+                      ),
+                    )),
               ),
             ),
           ],
@@ -224,15 +228,27 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    thinText(text: 'Montant total', fontSize: mq.aspectRatio * 35, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
-                    boldText(text: '${factureController.montantTotal.toStringAsFixed(2)} €', fontSize: mq.aspectRatio * 45, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor)
+                    thinText(
+                        text: '${'amount'.tr} total',
+                        fontSize: mq.aspectRatio * 35,
+                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                    boldText(
+                        text: '${factureController.montantTotal.toStringAsFixed(2)} €',
+                        fontSize: mq.aspectRatio * 45,
+                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor)
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    thinText(text: "Date d'échéance", fontSize: mq.aspectRatio * 35, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
-                    boldText(text: FormattedDate(factureController.facture.value.dateEchance).originalFormattedDayLine, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                    thinText(
+                        text: "due_date".tr,
+                        fontSize: mq.aspectRatio * 35,
+                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                    boldText(
+                        text: FormattedDate(factureController.facture.value.dateEchance)
+                            .originalFormattedDayLine,
+                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
                         fontSize: mq.aspectRatio * 45)
                   ],
                 ),
@@ -246,8 +262,8 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
                 child: _buildbottomButton(
                   iconString: Assets.iconsSend,
                   bgColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-                  text: ' Envoyer',
-                  onTap: () async{
+                  text: ' sned'.tr,
+                  onTap: () async {
                     factureController.clearFactureDetails();
                     _printPdf();
                     await factureController.saveFactureDetails();
@@ -270,12 +286,14 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
                 height: mq.height * 0.17,
                 child: _buildbottomButton(
                   iconString: Assets.iconsShare,
-                  text: ' Paratger',
-                  onTap: () async{
+                  text: ' ${'share'.tr}',
+                  onTap: () async {
                     _generatePdf().then((_) => _sharePdf());
                   },
                   bgColor: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
-                  borderColor: isLightTheme ? ColorsTheme.blackColor.withAlpha(80) : ColorsTheme.orangeColor.withAlpha(150),
+                  borderColor: isLightTheme
+                      ? ColorsTheme.blackColor.withAlpha(80)
+                      : ColorsTheme.orangeColor.withAlpha(150),
                   iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
                   txtColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
                 ),
@@ -287,8 +305,14 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
     );
   }
 
-  Widget _buildbottomButton({required String iconString, required String text, required VoidCallback onTap,
-    Color? bgColor, Color? borderColor, required Color txtColor, required Color iconColor}){
+  Widget _buildbottomButton(
+      {required String iconString,
+      required String text,
+      required VoidCallback onTap,
+      Color? bgColor,
+      Color? borderColor,
+      required Color txtColor,
+      required Color iconColor}) {
     return bottomButtonInScreen(
       isText: false,
       bgColor: bgColor,
@@ -296,9 +320,13 @@ class _FinaliserScreenState extends State<FinaliserScreen> {
       widget: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(iconString, height: mq.height * 0.04, color: iconColor,),
+          Image.asset(
+            iconString,
+            height: mq.height * 0.04,
+            color: iconColor,
+          ),
           Padding(
-            padding: EdgeInsets.only(top: mq.height *0.01 ),
+            padding: EdgeInsets.only(top: mq.height * 0.01),
             child: boldText(text: text, color: txtColor, fontSize: mq.aspectRatio * 50),
           )
         ],

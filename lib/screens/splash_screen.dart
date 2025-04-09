@@ -24,9 +24,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       duration: const Duration(seconds: 3),
       vsync: this,
     )..forward().then((_) {
-      // Navigate to the home screen after the animation
-      Get.offAll(() => const HomeScreen());
-    });
+        // Navigate to the home screen after the animation
+        Get.offAll(() => const HomeScreen());
+      });
 
     _fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
   }
@@ -57,12 +57,15 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  'Welcome to Facturation Intuitive',
-                  style: TextStyle(
-                    fontSize: mq.aspectRatio * 50,
-                    fontWeight: FontWeight.bold,
-                    color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
+                Center(
+                  child: Text(
+                    'Welcome to Facturation Intuitive',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: mq.aspectRatio * 50,
+                      fontWeight: FontWeight.bold,
+                      color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
+                    ),
                   ),
                 ),
               ],

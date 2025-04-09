@@ -43,55 +43,30 @@ class FactureModel1 extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildHeader(
-                      profile,
-                      fontSizeHeaderAndFooter,
-                      constraints,
-                      policeColor,
-                      fontFamily,
-                      facture
-                    ),
-                    _buildDivider(constraints.maxHeight * 0.01,
-                        constraints.maxHeight * 0.02, marqueColor),
+                    _buildHeader(profile, fontSizeHeaderAndFooter, constraints, policeColor,
+                        fontFamily, facture),
+                    _buildDivider(
+                        constraints.maxHeight * 0.01, constraints.maxHeight * 0.02, marqueColor),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: constraints.maxWidth * 0.03),
                       child: Column(
                         children: [
-                          _buildBody(
-                            client,
-                            fontSizeMiddle,
-                            constraints,
-                            policeColor,
-                            fontFamily,
-                            factureController,
-                            facture
-                          ),
+                          _buildBody(client, fontSizeMiddle, constraints, policeColor, fontFamily,
+                              factureController, facture),
                           _buildDivider(constraints.maxHeight * 0.02, 0, marqueColor),
-                          _buildItemsSection(
-                            factureController,
-                            fontSizeMiddle,
-                            constraints,
-                            marqueColor,
-                            policeColor,
-                            fontFamily,
-                            facture
-                          ),
+                          _buildItemsSection(factureController, fontSizeMiddle, constraints,
+                              marqueColor, policeColor, fontFamily, facture),
                           _buildDivider(0, constraints.maxHeight * 0.02, marqueColor),
                         ],
                       ),
                     ),
-                    _buildSummarySection(
-                      factureController,
-                      fontSizeMiddle,
-                      constraints,
-                      policeColor,
-                      fontFamily,
-                      facture
-                    ),
+                    _buildSummarySection(factureController, fontSizeMiddle, constraints,
+                        policeColor, fontFamily, facture),
                   ],
                 ),
                 const Spacer(),
-                _buildBanckInfo(profile, constraints, policeColor, marqueColor, fontSizeHeaderAndFooter, fontFamily, facture)
+                _buildBanckInfo(profile, constraints, policeColor, marqueColor,
+                    fontSizeHeaderAndFooter, fontFamily, facture)
               ],
             ),
           );
@@ -135,30 +110,26 @@ class FactureModel1 extends StatelessWidget {
       padding: (profile.image == '' || facture?.businessDetails.image == '')
           ? EdgeInsets.only(top: constraints.maxHeight * 0.05)
           : EdgeInsets.zero,
-      child: facture != null ?
-      facture.businessDetails.image != ''
-          ? Image.file(
-        File(facture.businessDetails.image!),
-        width: constraints.maxWidth * 0.15,
-        fit: BoxFit.cover,
-      ) : boldText(text: facture.businessDetails.name, fontSize: constraints.maxWidth * 0.01)
+      child: facture != null
+          ? facture.businessDetails.image != ''
+              ? Image.file(
+                  File(facture.businessDetails.image!),
+                  width: constraints.maxWidth * 0.15,
+                  fit: BoxFit.cover,
+                )
+              : boldText(text: facture.businessDetails.name, fontSize: constraints.maxWidth * 0.01)
           : profile.image != ''
-          ? Image.file(
-        File(profile.image!),
-        width: constraints.maxWidth * 0.15,
-        fit: BoxFit.cover,
-      ) : Center(child: boldText(text: profile.name,  fontSize: constraints.maxWidth * 0.025)),
+              ? Image.file(
+                  File(profile.image!),
+                  width: constraints.maxWidth * 0.15,
+                  fit: BoxFit.cover,
+                )
+              : Center(child: boldText(text: profile.name, fontSize: constraints.maxWidth * 0.025)),
     );
   }
 
-  Widget _buildProfileDetails(
-    profile,
-    double fontSize,
-    BoxConstraints constraints,
-    Color policeColor,
-    String fontFamily,
-    FactureModel? facture
-  ) {
+  Widget _buildProfileDetails(profile, double fontSize, BoxConstraints constraints,
+      Color policeColor, String fontFamily, FactureModel? facture) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -166,7 +137,8 @@ class FactureModel1 extends StatelessWidget {
           text: facture != null ? facture.businessDetails.name : profile.name,
           fontSize: fontSize,
           color: policeColor,
-          fontFamily: fontFamily,),
+          fontFamily: fontFamily,
+        ),
         _buildTextLine(
           '',
           '${facture != null ? facture.businessDetails.address : profile.address} '
@@ -205,14 +177,8 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildContactInfo(
-    profile,
-    double fontSize,
-    BoxConstraints constraints,
-    Color policeColor,
-    String fontFamily,
-    FactureModel? facture
-  ) {
+  Widget _buildContactInfo(profile, double fontSize, BoxConstraints constraints, Color policeColor,
+      String fontFamily, FactureModel? facture) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -230,7 +196,7 @@ class FactureModel1 extends StatelessWidget {
           fontFamily,
         ),
         boldText(
-          text: '  Téléphone: ',
+          text: '  ${'phone'.tr}: ',
           fontSize: fontSize,
           color: policeColor,
           fontFamily: fontFamily,
@@ -289,20 +255,14 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildDestinataireSection(
-    client,
-    double fontSize,
-    BoxConstraints constraints,
-    Color policeColor,
-    String fontFamily,
-    FactureModel? facture
-  ) {
+  Widget _buildDestinataireSection(client, double fontSize, BoxConstraints constraints,
+      Color policeColor, String fontFamily, FactureModel? facture) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         normalText(
-          text: 'Destinataire:',
+          text: '${'reciever'.tr}:',
           fontSize: fontSize,
           color: policeColor,
           fontFamily: fontFamily,
@@ -312,106 +272,109 @@ class FactureModel1 extends StatelessWidget {
           height: constraints.maxHeight * 0.1,
           width: constraints.maxWidth * 0.5,
           child: facture != null
-            ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              normalText(
-                text: facture.clientDetails!.name.toString().toUpperCase(),
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              normalText(
-                text: facture.clientDetails!.address,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              facture.clientDetails!.address2 != '' ?
-              normalText(
-                text: facture.clientDetails!.address2 ?? '',
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ) : const SizedBox(),
-              normalText(
-                text: '${facture.clientDetails!.postalCode ?? ''} - ${facture.clientDetails!.city ?? ''}',
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              normalText(
-                text: facture.clientDetails!.country,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              client.tvaNumber != null
-                  ? normalText(
-                text: 'N° TVA ${facture.clientDetails!.tvaNumber ?? ''}',
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              )
-                  : const SizedBox(),
-            ],
-          )
-            : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              normalText(
-                text: client.name.toString().toUpperCase(),
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              normalText(
-                text: client.address,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              client.address2 != '' ?
-              normalText(
-                text: "${client.address2 ?? ''}",
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ) : const SizedBox(),
-              normalText(
-                text: '${client.postalCode ?? ''} - ${client.city ?? ''}',
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              normalText(
-                text: client.country,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false,
-              ),
-              client.tvaNumber != null
-              ? normalText(
-                  text: 'N° TVA ${client.tvaNumber ?? ''}',
-                  fontSize: fontSize,
-                  color: policeColor,
-                  fontFamily: fontFamily,
-                  hasOverFlow: false,
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    normalText(
+                      text: facture.clientDetails!.name.toString().toUpperCase(),
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    normalText(
+                      text: facture.clientDetails!.address,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    facture.clientDetails!.address2 != ''
+                        ? normalText(
+                            text: facture.clientDetails!.address2 ?? '',
+                            fontSize: fontSize,
+                            color: policeColor,
+                            fontFamily: fontFamily,
+                            hasOverFlow: false,
+                          )
+                        : const SizedBox(),
+                    normalText(
+                      text:
+                          '${facture.clientDetails!.postalCode ?? ''} - ${facture.clientDetails!.city ?? ''}',
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    normalText(
+                      text: facture.clientDetails!.country,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    client.tvaNumber != null
+                        ? normalText(
+                            text: 'N° TVA ${facture.clientDetails!.tvaNumber ?? ''}',
+                            fontSize: fontSize,
+                            color: policeColor,
+                            fontFamily: fontFamily,
+                            hasOverFlow: false,
+                          )
+                        : const SizedBox(),
+                  ],
                 )
-              : const SizedBox(),
-            ],
-          ),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    normalText(
+                      text: client.name.toString().toUpperCase(),
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    normalText(
+                      text: client.address,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    client.address2 != ''
+                        ? normalText(
+                            text: "${client.address2 ?? ''}",
+                            fontSize: fontSize,
+                            color: policeColor,
+                            fontFamily: fontFamily,
+                            hasOverFlow: false,
+                          )
+                        : const SizedBox(),
+                    normalText(
+                      text: '${client.postalCode ?? ''} - ${client.city ?? ''}',
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    normalText(
+                      text: client.country,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false,
+                    ),
+                    client.tvaNumber != null
+                        ? normalText(
+                            text: 'N° TVA ${client.tvaNumber ?? ''}',
+                            fontSize: fontSize,
+                            color: policeColor,
+                            fontFamily: fontFamily,
+                            hasOverFlow: false,
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
         ),
       ],
     );
@@ -439,8 +402,7 @@ class FactureModel1 extends StatelessWidget {
       children: [
         _buildFactureDetailRow(
           'Facture: ',
-          facture != null ? facture.invoiceNumber :
-          factureController.facture.value.invoiceNumber,
+          facture != null ? facture.invoiceNumber : factureController.facture.value.invoiceNumber,
           // Replace with the actual date if available
           fontSize,
           constraints,
@@ -449,9 +411,11 @@ class FactureModel1 extends StatelessWidget {
           right: constraints.maxWidth * 0.03,
         ),
         _buildFactureDetailRow(
-          'Date de profile:',
-          facture != null ? formattedDate(facture.dateEmission):
-          formattedDate(factureController.facture.value.dateEmission),          // Replace with the actual date if available
+          '${'profile_date'.tr}:',
+          facture != null
+              ? formattedDate(facture.dateEmission)
+              : formattedDate(factureController
+                  .facture.value.dateEmission), // Replace with the actual date if available
           fontSize,
           constraints,
           policeColor,
@@ -460,10 +424,12 @@ class FactureModel1 extends StatelessWidget {
           right: constraints.maxWidth * 0.03,
         ),
         _buildFactureDetailRow(
-          "Date d'échéance:",
-          facture != null ?
-          formattedDate(facture.dateEchance):          // Replace with the actual date if available
-          formattedDate(factureController.facture.value.dateEchance),          // Replace with the actual date if available
+          "${'due_date'.tr}:'}:",
+          facture != null
+              ? formattedDate(facture.dateEchance)
+              : // Replace with the actual date if available
+              formattedDate(factureController
+                  .facture.value.dateEchance), // Replace with the actual date if available
           fontSize,
           constraints,
           policeColor,
@@ -471,27 +437,29 @@ class FactureModel1 extends StatelessWidget {
           top: constraints.maxHeight * 0.01,
           right: constraints.maxWidth * 0.03,
         ),
-        facture != null?
-          _buildFactureDetailRow(
-            "Numero de client:",
-            facture.clientDetails!.id.toString(), // Use the checked clientId
-            fontSize,
-            constraints,
-            policeColor,
-            fontFamily,
-            top: constraints.maxHeight * 0.02,
-            right: constraints.maxWidth * 0.03,
-          ) : client.id != 0 ?
-          _buildFactureDetailRow(
-            "Numero de client:",
-            clientId, // Use the checked clientId
-            fontSize,
-            constraints,
-            policeColor,
-            fontFamily,
-            top: constraints.maxHeight * 0.02,
-            right: constraints.maxWidth * 0.03,
-          ): const SizedBox(),
+        facture != null
+            ? _buildFactureDetailRow(
+                "${'client_num'.tr}:",
+                facture.clientDetails!.id.toString(), // Use the checked clientId
+                fontSize,
+                constraints,
+                policeColor,
+                fontFamily,
+                top: constraints.maxHeight * 0.02,
+                right: constraints.maxWidth * 0.03,
+              )
+            : client.id != 0
+                ? _buildFactureDetailRow(
+                    "${'client_num'.tr}:",
+                    clientId, // Use the checked clientId
+                    fontSize,
+                    constraints,
+                    policeColor,
+                    fontFamily,
+                    top: constraints.maxHeight * 0.02,
+                    right: constraints.maxWidth * 0.03,
+                  )
+                : const SizedBox(),
       ],
     );
   }
@@ -527,14 +495,13 @@ class FactureModel1 extends StatelessWidget {
   }
 
   Widget _buildItemsSection(
-    FactureController factureController,
-    double fontSize,
-    BoxConstraints constraints,
-    Color marqueColor,
-    Color policeColor,
-    String fontFamily,
-    FactureModel? facture
-  ) {
+      FactureController factureController,
+      double fontSize,
+      BoxConstraints constraints,
+      Color marqueColor,
+      Color policeColor,
+      String fontFamily,
+      FactureModel? facture) {
     return Column(
       children: [
         Row(
@@ -554,7 +521,7 @@ class FactureModel1 extends StatelessWidget {
               child: Row(
                 children: [
                   _buildTableHeader(
-                    'Quantité',
+                    'quantity'.tr,
                     constraints.maxWidth * 0.1,
                     fontSize,
                     policeColor,
@@ -564,14 +531,14 @@ class FactureModel1 extends StatelessWidget {
               ),
             ),
             _buildTableHeader(
-              'Unité',
+              'unite'.tr,
               constraints.maxWidth * 0.06,
               fontSize,
               policeColor,
               fontFamily,
             ),
             _buildTableHeader(
-              'Prix',
+              'price'.tr,
               constraints.maxWidth * 0.06,
               fontSize,
               policeColor,
@@ -585,7 +552,7 @@ class FactureModel1 extends StatelessWidget {
               fontFamily,
             ),
             _buildTableHeader(
-              'Montant',
+              'amount'.tr,
               constraints.maxWidth * 0.089,
               fontSize,
               policeColor,
@@ -597,38 +564,53 @@ class FactureModel1 extends StatelessWidget {
         _buildDivider(0, 0, marqueColor),
         Padding(
           padding: EdgeInsets.symmetric(vertical: constraints.maxHeight * 0.00),
-          child: facture != null ?
-          Column(
-            children: facture.items.map((item) {
-              return _buildItemRow(
-                  item, fontSize, constraints, policeColor, fontFamily);
-            }).toList(),
-          ) :
-          Column(
-            children: factureController.items.map((item) {
-              return _buildItemRow(
-                  item, fontSize, constraints, policeColor, fontFamily);
-            }).toList(),
-          ),
+          child: facture != null
+              ? Column(
+                  children: facture.items.map((item) {
+                    return _buildItemRow(item, fontSize, constraints, policeColor, fontFamily);
+                  }).toList(),
+                )
+              : Column(
+                  children: factureController.items.map((item) {
+                    return _buildItemRow(item, fontSize, constraints, policeColor, fontFamily);
+                  }).toList(),
+                ),
         )
       ],
     );
   }
 
-  Widget _buildItemRow(ItemsModel items, double fontSize, BoxConstraints constraints, Color policeColor, String fontFamily,) {
-
+  Widget _buildItemRow(
+    ItemsModel items,
+    double fontSize,
+    BoxConstraints constraints,
+    Color policeColor,
+    String fontFamily,
+  ) {
     // Check if facture is not null before accessing its properties
-    var prix = items.totalPrice != null && items.tva != null ? items.totalPrice! / (1 + (items.tva! / 100)) : 0.0;
+    var prix = items.totalPrice != null && items.tva != null
+        ? items.totalPrice! / (1 + (items.tva! / 100))
+        : 0.0;
     return Row(
       children: [
-        if(items.description != null)
+        if (items.description != null)
           Column(
             children: [
-              _buildTableCell("${items.name?.toUpperCase()}", constraints.maxWidth * 0.5,
-                fontSize, policeColor, fontFamily, alignLeft: true,
+              _buildTableCell(
+                "${items.name?.toUpperCase()}",
+                constraints.maxWidth * 0.5,
+                fontSize,
+                policeColor,
+                fontFamily,
+                alignLeft: true,
               ),
-              _buildTableCell("${items.description}", constraints.maxWidth * 0.5,
-                fontSize, policeColor, fontFamily, alignLeft: true,
+              _buildTableCell(
+                "${items.description}",
+                constraints.maxWidth * 0.5,
+                fontSize,
+                policeColor,
+                fontFamily,
+                alignLeft: true,
               ),
             ],
           ),
@@ -660,13 +642,15 @@ class FactureModel1 extends StatelessWidget {
           policeColor,
           fontFamily,
         ),
-        _buildTableCell(items.totalPrice?.toStringAsFixed(2) ?? '0,00', constraints.maxWidth * 0.08, fontSize,
-            policeColor, fontFamily, alignRight: true),
+        _buildTableCell(items.totalPrice?.toStringAsFixed(2) ?? '0,00', constraints.maxWidth * 0.08,
+            fontSize, policeColor, fontFamily,
+            alignRight: true),
       ],
     );
   }
 
-  Widget _buildSummarySection(FactureController factureController, double fontSize, BoxConstraints constraints, Color policeColor, String fontFamily, FactureModel? facture) {
+  Widget _buildSummarySection(FactureController factureController, double fontSize,
+      BoxConstraints constraints, Color policeColor, String fontFamily, FactureModel? facture) {
     bool htSelected = factureController.isPrixHTSelected.value;
 
     // Calculate Sous-total
@@ -676,12 +660,13 @@ class FactureModel1 extends StatelessWidget {
     final averageTVA = factureController.tvaAverage;
     final tvaSousTotalHT = (factureController.tvaAverage / 100) * sousTotalHT;
 
-    double montantTotalHT = sousTotalHT + tvaSousTotalHT; // Assuming Montant Total includes Sous-total + TVA
+    double montantTotalHT =
+        sousTotalHT + tvaSousTotalHT; // Assuming Montant Total includes Sous-total + TVA
 
     double montantTotalTTC = factureController.montantTotal.value;
-    double sousTotalTTC = factureController.montantTotal / (1 + (factureController.tvaAverage / 100));
+    double sousTotalTTC =
+        factureController.montantTotal / (1 + (factureController.tvaAverage / 100));
     double tvaSousTotalTTC = montantTotalTTC - sousTotalTTC;
-
 
     // Check if facture is not null before accessing its properties
     var sousTotalHistory = facture != null
@@ -690,52 +675,83 @@ class FactureModel1 extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(width: constraints.maxWidth * 0.45,),
+        SizedBox(
+          width: constraints.maxWidth * 0.45,
+        ),
         Padding(
           padding: EdgeInsets.only(right: constraints.maxWidth * 0.03),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              facture!= null ?
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _buildSummaryRow(constraints,
-                      'Sous-total HT',
-                      sousTotalHistory.toStringAsFixed(2),
-                      constraints.maxWidth * 0.02, policeColor, fontFamily,
-                      bottom: constraints.maxHeight * 0.01),
-                  _buildSummaryRow(constraints,
-                      'TVA ${facture.tvaAverage.toInt()}% de '
-                      '${sousTotalHistory.toStringAsFixed(2)}',
-                      ((facture.tvaAverage/100) * sousTotalHistory).toStringAsFixed(2),
-                      constraints.maxWidth * 0.02, policeColor, fontFamily,
-                      bottom: constraints.maxHeight * 0.02),
-                  _buildSummaryRow(constraints,
-                      'Montant Total EUR', facture.montantTotal.toStringAsFixed(2), constraints.maxWidth * 0.02, policeColor, fontFamily,
-                      isBold: true),
-                ],
-              ) :
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _buildSummaryRow(constraints,
-                      'Sous-total HT',
-                      htSelected ? sousTotalHT.toStringAsFixed(2) : sousTotalTTC.toStringAsFixed(2),
-                      constraints.maxWidth * 0.02, policeColor, fontFamily,
-                      bottom: constraints.maxHeight * 0.01),
-                  _buildSummaryRow(constraints,
-                      'TVA ${averageTVA.toInt()}% de '
-                      '${htSelected ? sousTotalHT.toStringAsFixed(2) : sousTotalTTC.toStringAsFixed(2)}',
-                      htSelected ? tvaSousTotalHT.toStringAsFixed(2) : tvaSousTotalTTC.toStringAsFixed(2),
-                      constraints.maxWidth * 0.02, policeColor, fontFamily, bottom: constraints.maxHeight * 0.02),
-                  _buildSummaryRow(constraints,
-                      'Montant Total EUR', htSelected ? montantTotalHT.toStringAsFixed(2) : montantTotalTTC.toStringAsFixed(2),
-                      constraints.maxWidth * 0.02, policeColor, fontFamily, isBold: true),
-                ],
-              ),
+              facture != null
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildSummaryRow(
+                            constraints,
+                            'Sous-total HT',
+                            sousTotalHistory.toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            bottom: constraints.maxHeight * 0.01),
+                        _buildSummaryRow(
+                            constraints,
+                            'TVA ${facture.tvaAverage.toInt()}% de '
+                            '${sousTotalHistory.toStringAsFixed(2)}',
+                            ((facture.tvaAverage / 100) * sousTotalHistory).toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            bottom: constraints.maxHeight * 0.02),
+                        _buildSummaryRow(
+                            constraints,
+                            '${'amount'.tr} Total EUR',
+                            facture.montantTotal.toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            isBold: true),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _buildSummaryRow(
+                            constraints,
+                            'Sous-total HT',
+                            htSelected
+                                ? sousTotalHT.toStringAsFixed(2)
+                                : sousTotalTTC.toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            bottom: constraints.maxHeight * 0.01),
+                        _buildSummaryRow(
+                            constraints,
+                            'TVA ${averageTVA.toInt()}% de '
+                            '${htSelected ? sousTotalHT.toStringAsFixed(2) : sousTotalTTC.toStringAsFixed(2)}',
+                            htSelected
+                                ? tvaSousTotalHT.toStringAsFixed(2)
+                                : tvaSousTotalTTC.toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            bottom: constraints.maxHeight * 0.02),
+                        _buildSummaryRow(
+                            constraints,
+                            '${'amount'} Total EUR',
+                            htSelected
+                                ? montantTotalHT.toStringAsFixed(2)
+                                : montantTotalTTC.toStringAsFixed(2),
+                            constraints.maxWidth * 0.02,
+                            policeColor,
+                            fontFamily,
+                            isBold: true),
+                      ],
+                    ),
             ],
           ),
         ),
@@ -743,29 +759,29 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildTableHeader(String label, double width, double fontSize, Color policeColor, fontFamily, {bool alignLeft = false, bool alignRight = false}) {
+  Widget _buildTableHeader(
+      String label, double width, double fontSize, Color policeColor, fontFamily,
+      {bool alignLeft = false, bool alignRight = false}) {
     return SizedBox(
       width: width,
       child: alignLeft
           ? Align(
               alignment: Alignment.centerLeft,
               child: normalText(
-                text: label,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false
-              ))
+                  text: label,
+                  fontSize: fontSize,
+                  color: policeColor,
+                  fontFamily: fontFamily,
+                  hasOverFlow: false))
           : alignRight
               ? Align(
                   alignment: Alignment.centerRight,
                   child: normalText(
-                    text: label,
-                    fontSize: fontSize,
-                    color: policeColor,
-                    fontFamily: fontFamily,
-                    hasOverFlow: false
-                  ))
+                      text: label,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false))
               : Center(
                   child: normalText(
                   text: label,
@@ -776,8 +792,8 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildTableCell(String value, double width, double fontSize,
-      Color policeColor, String fontFamily,
+  Widget _buildTableCell(
+      String value, double width, double fontSize, Color policeColor, String fontFamily,
       {bool alignRight = false, bool alignLeft = false}) {
     return SizedBox(
       width: width,
@@ -785,22 +801,20 @@ class FactureModel1 extends StatelessWidget {
           ? Align(
               alignment: Alignment.centerLeft,
               child: normalText(
-                text: value,
-                fontSize: fontSize,
-                color: policeColor,
-                fontFamily: fontFamily,
-                hasOverFlow: false
-              ))
+                  text: value,
+                  fontSize: fontSize,
+                  color: policeColor,
+                  fontFamily: fontFamily,
+                  hasOverFlow: false))
           : alignRight
               ? Align(
                   alignment: Alignment.centerRight,
                   child: normalText(
-                    text: value,
-                    fontSize: fontSize,
-                    color: policeColor,
-                    fontFamily: fontFamily,
-                    hasOverFlow: false
-                  ))
+                      text: value,
+                      fontSize: fontSize,
+                      color: policeColor,
+                      fontFamily: fontFamily,
+                      hasOverFlow: false))
               : Center(
                   child: normalText(
                   text: value,
@@ -811,7 +825,8 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildSummaryRow(BoxConstraints constraints, String label, String value, double fontSize, policeColor, fontFamily,
+  Widget _buildSummaryRow(BoxConstraints constraints, String label, String value, double fontSize,
+      policeColor, fontFamily,
       {bool isBold = false, double bottom = 0}) {
     return SizedBox(
       width: constraints.maxWidth * 0.45,
@@ -820,7 +835,7 @@ class FactureModel1 extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only( bottom: bottom),
+            padding: EdgeInsets.only(bottom: bottom),
             child: isBold
                 ? boldText(
                     text: label,
@@ -862,14 +877,8 @@ class FactureModel1 extends StatelessWidget {
     String fontFamily,
   ) {
     return text != null && text.isNotEmpty
-        ? thinText(
-            text: text,
-            fontSize: fontSize,
-            color: policeColor,
-            fontFamily: fontFamily)
-        : greyContainer(
-            width: constraints.maxWidth * 0.1,
-            height: constraints.maxHeight * 0.02);
+        ? thinText(text: text, fontSize: fontSize, color: policeColor, fontFamily: fontFamily)
+        : greyContainer(width: constraints.maxWidth * 0.1, height: constraints.maxHeight * 0.02);
   }
 
   Widget _buildTextLine(
@@ -912,37 +921,57 @@ class FactureModel1 extends StatelessWidget {
   Widget _buildDivider(double top, double bottom, Color marqueColor) {
     return Padding(
       padding: EdgeInsets.only(top: top, bottom: bottom),
-      child: Divider(color: marqueColor, thickness: 1,),
+      child: Divider(
+        color: marqueColor,
+        thickness: 1,
+      ),
     );
   }
 
-  Widget _buildBanckInfo(ProfileModel profile, BoxConstraints constraints,Color policeColor, Color marqueColor, double fontSize, String fontFamily, FactureModel? facture){
+  Widget _buildBanckInfo(ProfileModel profile, BoxConstraints constraints, Color policeColor,
+      Color marqueColor, double fontSize, String fontFamily, FactureModel? facture) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildDivider(0, 0, marqueColor),
         Container(
           width: constraints.maxWidth,
-          padding: EdgeInsets.only(bottom: constraints.maxHeight * 0.02, left: constraints.maxWidth * 0.05, right: constraints.maxWidth * 0.05),
+          padding: EdgeInsets.only(
+              bottom: constraints.maxHeight * 0.02,
+              left: constraints.maxWidth * 0.05,
+              right: constraints.maxWidth * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              boldText(text: 'Informations bancaires'.toUpperCase(), fontSize: fontSize * 1.25, color: policeColor, fontFamily: fontFamily),
+              boldText(
+                  text: 'bank_information'.tr.toUpperCase(),
+                  fontSize: fontSize * 1.25,
+                  color: policeColor,
+                  fontFamily: fontFamily),
               SizedBox(height: constraints.maxHeight * 0.005),
               Padding(
                 padding: EdgeInsets.only(top: constraints.maxHeight * 0.01),
-                child: _buildBankRowValues("Nom de l'entreprise: ".toUpperCase(),
-                  facture!= null ? facture.businessDetails.name : profile.name,
-                  policeColor, fontSize, fontFamily,
+                child: _buildBankRowValues(
+                  "${'company_name'.tr}: ".toUpperCase(),
+                  facture != null ? facture.businessDetails.name : profile.name,
+                  policeColor,
+                  fontSize,
+                  fontFamily,
                 ),
               ),
-              _buildBankRowValues("IBAN: ",
-                facture!= null ? facture.businessDetails.iban ?? '' : profile.iban ?? '',
-                policeColor, fontSize, fontFamily,
+              _buildBankRowValues(
+                "IBAN: ",
+                facture != null ? facture.businessDetails.iban ?? '' : profile.iban ?? '',
+                policeColor,
+                fontSize,
+                fontFamily,
               ),
-              _buildBankRowValues("BIC-ADRESSE SWIFT: ",
-                facture!= null ? facture.businessDetails.swift ?? '' : profile.swift ?? '',
-                policeColor, fontSize, fontFamily,
+              _buildBankRowValues(
+                "BIC-ADRESSE SWIFT: ",
+                facture != null ? facture.businessDetails.swift ?? '' : profile.swift ?? '',
+                policeColor,
+                fontSize,
+                fontFamily,
               )
             ],
           ),
@@ -951,7 +980,8 @@ class FactureModel1 extends StatelessWidget {
     );
   }
 
-  Widget _buildBankRowValues(String title, String value, Color policeColor, double fontSize, String fontFamily){
+  Widget _buildBankRowValues(
+      String title, String value, Color policeColor, double fontSize, String fontFamily) {
     return Row(
       children: [
         boldText(text: title, fontSize: fontSize, color: policeColor, fontFamily: fontFamily),

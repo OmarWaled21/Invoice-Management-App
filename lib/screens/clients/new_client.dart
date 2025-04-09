@@ -68,11 +68,7 @@ class _NewClientState extends State<NewClient> {
   }
 
   // List of options to display
-  final List<String> options = [
-    "Société privée",
-    "Particulier",
-    "Administration publique"
-  ];
+  final List<String> options = ["Société privée", "Particulier", "Administration publique"];
 
   // Widget for building selectable containers
   Widget _buildSelectableContainer(int index, String text) {
@@ -90,17 +86,28 @@ class _NewClientState extends State<NewClient> {
         padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         decoration: BoxDecoration(
-          color: isSelected ? isLightTheme ? ColorsTheme.blackColor.withAlpha(20) : ColorsTheme.whiteColor.withAlpha(20) : Colors.transparent,
+          color: isSelected
+              ? isLightTheme
+                  ? ColorsTheme.blackColor.withAlpha(20)
+                  : ColorsTheme.whiteColor.withAlpha(20)
+              : Colors.transparent,
           border: Border.all(
-            color: isSelected ?
-              isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor :
-              isLightTheme ? ColorsTheme.lightGreyColor : ColorsTheme.darkGreyColor,
+            color: isSelected
+                ? isLightTheme
+                    ? ColorsTheme.blackColor
+                    : ColorsTheme.orangeColor
+                : isLightTheme
+                    ? ColorsTheme.lightGreyColor
+                    : ColorsTheme.darkGreyColor,
             width: isSelected ? 2.0 : 1.0,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-          child: normalText(text: text, fontSize: mq.aspectRatio * 45, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+          child: normalText(
+              text: text,
+              fontSize: mq.aspectRatio * 45,
+              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
         ),
       ),
     );
@@ -114,19 +121,18 @@ class _NewClientState extends State<NewClient> {
         : clientsController.getNextClientId(); // Use the next available ID for a new client
 
     return ContactsModel(
-      id: id, // Assign the ID here
-      name: nameController.text,
-      address: addressController.text,
-      address2: address2Controller.text,
-      city: cityController.text,
-      postalCode: int.tryParse(postCodeController.text) ?? 0,
-      tvaNumber: tvaNumberController.text,
-      email: emailController.text,
-      phone: int.tryParse(phoneController.text) ?? 0,
-      note: noteController.text,
-      clientType: options[_selectedIndex],
-      country: selectedCountry
-    );
+        id: id, // Assign the ID here
+        name: nameController.text,
+        address: addressController.text,
+        address2: address2Controller.text,
+        city: cityController.text,
+        postalCode: int.tryParse(postCodeController.text) ?? 0,
+        tvaNumber: tvaNumberController.text,
+        email: emailController.text,
+        phone: int.tryParse(phoneController.text) ?? 0,
+        note: noteController.text,
+        clientType: options[_selectedIndex],
+        country: selectedCountry);
   }
 
   // Add or update client based on whether we're editing or creating a new one
@@ -188,11 +194,9 @@ class _NewClientState extends State<NewClient> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: widget.existingClient != null
-            ? 'Modifier le client'
-            : 'Ajouter un client',
+        title: widget.existingClient != null ? 'edit_customer'.tr : 'add_customer'.tr,
         hasLeading: true,
-        textLeading: 'Annuler',
+        textLeading: 'cancel'.tr,
         onPressedLeading: () {
           Get.back();
         },
@@ -210,37 +214,36 @@ class _NewClientState extends State<NewClient> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               normalText(
-                text: 'Sélection du type de client',
-                fontSize: mq.aspectRatio * 40,
-                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
+                  text: 'customer_type_selection'.tr,
+                  fontSize: mq.aspectRatio * 40,
+                  color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
               ...List.generate(
                 options.length,
                 (index) => _buildSelectableContainer(index, options[index]),
               ),
               SizedBox(height: mq.height * 0.01),
               customTextField(
-                title: 'Nom du client',
+                title: 'name'.tr,
                 controller: nameController,
-                hint: 'Nom officiel',
+                hint: '${'name'.tr} officiel',
               ),
               customTextField(
-                title: 'Adresse ligne 1',
+                title: '${'address_line'.tr} 1',
                 controller: addressController,
-                hint: 'Adresse',
+                hint: 'address_line'.tr,
               ),
               customTextField(
-                title: 'Adresse ligne 2 (facultatif)',
+                title: '${'address_line'.tr} 2 (${'optional'.tr})',
                 controller: address2Controller,
-                hint: 'Appartment, bâtiment, étage',
+                hint: 'apartment_building_floor'.tr,
               ),
               customTextField(
-                title: 'Ville (facultatif)',
+                title: '${'city'.tr} (${'optional'.tr})',
                 controller: cityController,
-                hint: 'Ville ou localité',
+                hint: '${'city'.tr}',
               ),
               customTextField(
-                title: 'Code postal (facultatif)',
+                title: '${'postal_code'.tr} (${'optional'.tr})',
                 keyboardType: TextInputType.number,
                 controller: postCodeController,
                 hint: '75008',
@@ -250,7 +253,7 @@ class _NewClientState extends State<NewClient> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   normalText(
-                    text: 'Pays',
+                    text: 'country'.tr,
                     fontSize: mq.aspectRatio * 40,
                     color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
                   ),
@@ -259,7 +262,10 @@ class _NewClientState extends State<NewClient> {
                     margin: EdgeInsets.only(bottom: mq.height * 0.03),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(mq.aspectRatio * 20),
-                      border: Border.all(color: isLightTheme ? ColorsTheme.lightGreyColor : ColorsTheme.darkGreyColor),
+                      border: Border.all(
+                          color: isLightTheme
+                              ? ColorsTheme.lightGreyColor
+                              : ColorsTheme.darkGreyColor),
                     ),
                     child: CountryCodePicker(
                       initialSelection: selectedCountry, // Default to France
@@ -269,14 +275,17 @@ class _NewClientState extends State<NewClient> {
                       showOnlyCountryWhenClosed: true,
                       alignLeft: true,
                       textStyle: TextStyle(
-                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                        fontSize: mq.aspectRatio * 40,
-                        fontFamily: Assets.fontsArial
-                      ),
+                          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                          fontSize: mq.aspectRatio * 40,
+                          fontFamily: Assets.fontsArial),
                       showFlag: false,
-                      barrierColor: isLightTheme ? ColorsTheme.whiteColor.withAlpha(150) : ColorsTheme.blackColor.withAlpha(150),
-                      dialogBackgroundColor: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
-                      dialogTextStyle: TextStyle(color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                      barrierColor: isLightTheme
+                          ? ColorsTheme.whiteColor.withAlpha(150)
+                          : ColorsTheme.blackColor.withAlpha(150),
+                      dialogBackgroundColor:
+                          isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
+                      dialogTextStyle: TextStyle(
+                          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
                       onChanged: (CountryCode countryCode) {
                         setState(() {
                           selectedCountry = countryCode.name ?? 'France'; // Store selected country
@@ -284,9 +293,11 @@ class _NewClientState extends State<NewClient> {
                       },
                       searchDecoration: InputDecoration(
                         contentPadding: EdgeInsets.symmetric(vertical: mq.height * 0.01),
-                        hintText: 'Pays',
+                        hintText: 'country'.tr,
                         hintStyle: TextStyle(
-                          color: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor.withAlpha(150),
+                          color: isLightTheme
+                              ? ColorsTheme.blueColor
+                              : ColorsTheme.orangeColor.withAlpha(150),
                           fontSize: mq.aspectRatio * 40,
                         ),
                         border: OutlineInputBorder(
@@ -308,27 +319,27 @@ class _NewClientState extends State<NewClient> {
                 ],
               ),
               customTextField(
-                title: 'Numéro de TVA (facultatif)',
+                title: '${'tva_num'.tr}(${'optional'.tr})',
                 controller: tvaNumberController,
                 hint: 'FR00111111111',
               ),
               customTextField(
-                title: 'Email (facultatif)',
+                title: 'Email (${'optional'.tr})',
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 hint: 'email@example.fr',
               ),
               customTextField(
-                title: 'Numéro de téléphone (facultatif)',
+                title: '${'phone_number'.tr} (${'optional'.tr})',
                 keyboardType: TextInputType.phone,
                 controller: phoneController,
                 hint: '+33 123456789',
               ),
               customTextField(
-                title: 'Remarques (facultatif)',
+                title: '${'notes'.tr} (${'optional'.tr})',
                 controller: noteController,
                 maxLines: 3,
-                hint: 'Remarques',
+                hint: 'notes'.tr,
               ),
             ],
           ),

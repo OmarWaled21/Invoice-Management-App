@@ -16,13 +16,13 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-
 class ApercuScreen extends StatefulWidget {
   const ApercuScreen({super.key});
 
   @override
   State<ApercuScreen> createState() => _ApercuScreenState();
 }
+
 final GlobalKey _globalKey = GlobalKey();
 
 Future<void> _printPdf() async {
@@ -71,56 +71,57 @@ class _ApercuScreenState extends State<ApercuScreen> {
           return const FactureModel1();
       }
     }
+
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return Scaffold(
-      appBar: DefaultAppbar(
-        title: 'Document n° ${factureController.facture.value.invoiceNumber}',
-        hasLeading: true,
-        onPressedLeading: () => Get.back(),
-        textLeading: 'Fremer',
-        hasActions: true,
-        onPressedAction: () => _printPdf(),
-        iconActions: Icons.print,
-      ),
-      body: Container(
-        width: mq.width,
-        height: mq.height,
-        color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
-        child: Column(
-          children: [
-            Center(
-              child: SizedBox(
-                height: mq.height * 0.65,
-                width: mq.width * 0.9,
-                child: Container(
-                  margin: EdgeInsets.only(top: mq.height * 0.05),
-                  // Adjust padding
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withAlpha(60),
-                        blurRadius: 10,
-                        offset: const Offset(0, 0),
-                        spreadRadius: 2,
+        appBar: DefaultAppbar(
+          title: 'Document n° ${factureController.facture.value.invoiceNumber}',
+          hasLeading: true,
+          onPressedLeading: () => Get.back(),
+          textLeading: 'close'.tr,
+          hasActions: true,
+          onPressedAction: () => _printPdf(),
+          iconActions: Icons.print,
+        ),
+        body: Container(
+          width: mq.width,
+          height: mq.height,
+          color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
+          child: Column(
+            children: [
+              Center(
+                child: SizedBox(
+                  height: mq.height * 0.65,
+                  width: mq.width * 0.9,
+                  child: Container(
+                    margin: EdgeInsets.only(top: mq.height * 0.05),
+                    // Adjust padding
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(60),
+                          blurRadius: 10,
+                          offset: const Offset(0, 0),
+                          spreadRadius: 2,
+                        ),
+                      ],
+                    ),
+                    // Wrap the selected model with InteractiveViewer for zooming
+                    child: InteractiveViewer(
+                      maxScale: 4.0,
+                      child: RepaintBoundary(
+                        key: _globalKey,
+                        child:
+                            Obx(() => getSelectedModel(factureModelController.selectedModel.value)),
                       ),
-                    ],
-                  ),
-                  // Wrap the selected model with InteractiveViewer for zooming
-                  child: InteractiveViewer(
-                    maxScale: 4.0,
-                    child: RepaintBoundary(
-                      key: _globalKey,
-                      child: Obx(() => getSelectedModel(factureModelController.selectedModel.value)),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      )
-    );
+            ],
+          ),
+        ));
   }
 }

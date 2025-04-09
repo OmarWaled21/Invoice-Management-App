@@ -24,7 +24,6 @@ import "package:path/path.dart" as path;
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 
-
 class FactureHistoryDetails extends StatefulWidget {
   final FactureModel facture;
 
@@ -41,15 +40,20 @@ class _FactureHistoryDetailsState extends State<FactureHistoryDetails> {
   Widget _getSelectedModel(int selectedModel) {
     switch (selectedModel) {
       case 2:
-        return FactureModel2(facture: widget.facture,);
+        return FactureModel2(
+          facture: widget.facture,
+        );
       default:
-        return FactureModel1(facture: widget.facture,);
+        return FactureModel1(
+          facture: widget.facture,
+        );
     }
   }
 
   Future<void> _generatePdf() async {
     // Render widget to image
-    RenderRepaintBoundary boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage(pixelRatio: 10);
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -69,7 +73,8 @@ class _FactureHistoryDetailsState extends State<FactureHistoryDetails> {
     );
 
     // Get the device's documents directory
-    final directory = await getApplicationDocumentsDirectory(); // Default directory for app documents
+    final directory =
+        await getApplicationDocumentsDirectory(); // Default directory for app documents
     // You can choose a path inside the app's document directory or another one if needed
     final documentsDirectory = Directory(path.join(directory.path, 'MyInvoices'));
     if (!await documentsDirectory.exists()) {
@@ -87,7 +92,8 @@ class _FactureHistoryDetailsState extends State<FactureHistoryDetails> {
 
   Future<void> _printPdf() async {
     // Render widget to image
-    RenderRepaintBoundary boundary = _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
+    RenderRepaintBoundary boundary =
+        _globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
     final image = await boundary.toImage(pixelRatio: 10);
     final byteData = await image.toByteData(format: ImageByteFormat.png);
     final Uint8List pngBytes = byteData!.buffer.asUint8List();
@@ -113,7 +119,8 @@ class _FactureHistoryDetailsState extends State<FactureHistoryDetails> {
   Future<void> _sharePdf() async {
     // Define the directory path where the PDF is saved
     final directory = await getApplicationDocumentsDirectory();
-    final filePath = path.join(directory.path, 'invoice.pdf'); // Ensure it matches the path used to save the PDF
+    final filePath =
+        path.join(directory.path, 'invoice.pdf'); // Ensure it matches the path used to save the PDF
 
     // Check if the file exists
     final file = File(filePath);
@@ -190,16 +197,22 @@ class _FactureHistoryDetailsState extends State<FactureHistoryDetails> {
           widget: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(Assets.iconsShare, height: mq.height * 0.04,
-                color: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.whiteColor,),
+              Image.asset(
+                Assets.iconsShare,
+                height: mq.height * 0.04,
+                color: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.whiteColor,
+              ),
               Padding(
-                padding: EdgeInsets.only(top: mq.height *0.01 ),
-                child: boldText(text: ' Paratger', color: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.whiteColor,
-                  fontSize: mq.aspectRatio * 50,),
+                padding: EdgeInsets.only(top: mq.height * 0.01),
+                child: boldText(
+                  text: ' ${'share'.tr}',
+                  color: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.whiteColor,
+                  fontSize: mq.aspectRatio * 50,
+                ),
               )
             ],
           ),
-          onPressed: () async{
+          onPressed: () async {
             _generatePdf().then((_) => _sharePdf());
           },
           horizontal: mq.width * 0.05,

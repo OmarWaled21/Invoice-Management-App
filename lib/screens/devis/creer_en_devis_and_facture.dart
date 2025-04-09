@@ -33,7 +33,6 @@ class CreerUnDevisAndFacture extends StatefulWidget {
 }
 
 class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
-
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => FactureModelController(), fenix: true);
@@ -51,10 +50,12 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
       final averageTVA = factureController.tvaAverage.value;
       final tvaSousTotalHT = (factureController.tvaAverage / 100) * sousTotalHT;
 
-      double montantTotalHT = sousTotalHT + tvaSousTotalHT; // Assuming Montant Total includes Sous-total + TVA
+      double montantTotalHT =
+          sousTotalHT + tvaSousTotalHT; // Assuming Montant Total includes Sous-total + TVA
 
       double montantTotalTTC = factureController.montantTotal.value;
-      double sousTotalTTC = factureController.montantTotal / (1 + (factureController.tvaAverage / 100));
+      double sousTotalTTC =
+          factureController.montantTotal / (1 + (factureController.tvaAverage / 100));
       double tvaSousTotalTTC = montantTotalTTC - sousTotalTTC;
 
       final ThemeController themeController = Get.find<ThemeController>();
@@ -62,9 +63,9 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
 
       return Scaffold(
         appBar: DefaultAppbar(
-          title: widget.isDevis ? 'Créer un devis' : 'Créer une facture',
+          title: widget.isDevis ? 'create_quote'.tr : 'create_invoice'.tr,
           hasLeading: true,
-          textLeading: 'Annuler',
+          textLeading: 'cancel'.tr,
           onPressedLeading: () => Get.offAll(const HomeScreen()),
           hasActions: true,
           iconAssets: Assets.iconsMore,
@@ -76,7 +77,10 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
           width: mq.width,
           height: mq.height,
           color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
-          padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: mq.height * 0.02,),
+          padding: EdgeInsets.symmetric(
+            horizontal: mq.width * 0.05,
+            vertical: mq.height * 0.02,
+          ),
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -85,8 +89,10 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
                 _buildItemList(factureController),
                 _buildAddItemButton(),
                 htSelected
-                    ? _buildSummary(sousTotalHT, tvaSousTotalHT, montantTotalHT, factureController, averageTVA)
-                    : _buildSummary(sousTotalTTC, tvaSousTotalTTC, montantTotalTTC, factureController, averageTVA),
+                    ? _buildSummary(
+                        sousTotalHT, tvaSousTotalHT, montantTotalHT, factureController, averageTVA)
+                    : _buildSummary(sousTotalTTC, tvaSousTotalTTC, montantTotalTTC,
+                        factureController, averageTVA),
                 SizedBox(height: mq.height * 0.04),
               ],
             ),
@@ -97,23 +103,25 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
     });
   }
 
-  Widget _buildDocumentSection(FactureController factureController){
+  Widget _buildDocumentSection(FactureController factureController) {
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
-    return Obx(() {
-      return containerDevis(
-        onPressed: () => Get.to(() => const DocumentDate(), transition: Transition.downToUp),
-        title: 'Document n° ${factureController.facture.value.invoiceNumber}',
-        hasSubTitle: true,
-        subTitle1: FormattedDate(factureController.facture.value.dateEmission).formattedDayShortMonth,
-        subTitle2:
-        'Due dans ${FormattedDate(factureController.facture.value.dateEmission).daysBetween(factureController.facture.value.dateEchance)} jours',
-        titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-        iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-        subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor
-      );
-    },);
+    return Obx(
+      () {
+        return containerDevis(
+            onPressed: () => Get.to(() => const DocumentDate(), transition: Transition.downToUp),
+            title: 'Document n° ${factureController.facture.value.invoiceNumber}',
+            hasSubTitle: true,
+            subTitle1:
+                FormattedDate(factureController.facture.value.dateEmission).formattedDayShortMonth,
+            subTitle2:
+                '${'within'.tr} ${FormattedDate(factureController.facture.value.dateEmission).daysBetween(factureController.facture.value.dateEchance)} ${'days'.tr}',
+            titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+            iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
+            subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor);
+      },
+    );
   }
 
   Widget _buildClientSection(ContactsModel? client) {
@@ -121,17 +129,15 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return containerDevis(
-      onPressed: () =>
-          Get.to(const ClientsScreen(), transition: Transition.downToUp),
-      title: client?.name.isEmpty ?? true
-          ? 'Ajouter un client'
-          : "${client!.name.toUpperCase()} - ${client.address.toUpperCase()}",
-      isUnderLine: client?.name.isEmpty ?? true,
-      endIndent: mq.width * 0.34,
-      titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-      iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-      subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor
-    );
+        onPressed: () => Get.to(const ClientsScreen(), transition: Transition.downToUp),
+        title: client?.name.isEmpty ?? true
+            ? 'add_customer'.tr
+            : "${client!.name.toUpperCase()} - ${client.address.toUpperCase()}",
+        isUnderLine: client?.name.isEmpty ?? true,
+        endIndent: mq.width * 0.34,
+        titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+        iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
+        subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor);
   }
 
   Widget _buildItemList(FactureController factureController) {
@@ -149,23 +155,30 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
 
           return GestureDetector(
             onTap: () {
-              Get.to(() => AjouterUnArticleScreen(item: item, index: index), // Pass correct index here
+              Get.to(
+                  () => AjouterUnArticleScreen(item: item, index: index), // Pass correct index here
                   transition: Transition.downToUp);
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: mq.width * 0.04, vertical: mq.height * 0.01),
+              padding:
+                  EdgeInsets.symmetric(horizontal: mq.width * 0.04, vertical: mq.height * 0.01),
               width: mq.width,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.grey.shade400),
                 borderRadius: BorderRadius.circular(mq.aspectRatio * 30),
               ),
               child: ListTile(
-                title: boldText(text: item.name!.toUpperCase(), color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
-                trailing: boldText(text: "${item.totalPrice?.toStringAsFixed(2)} €", color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                title: boldText(
+                    text: item.name!.toUpperCase(),
+                    color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                trailing: boldText(
+                    text: "${item.totalPrice?.toStringAsFixed(2)} €",
+                    color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
                 subtitle: normalText(
-                  text: "${item.quantity} x ${item.price!.toStringAsFixed(2)} € (dont taxes ${(item.tva! / 100)})",
-                  fontSize: mq.aspectRatio * 30, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor
-                ),
+                    text:
+                        "${item.quantity} x ${item.price!.toStringAsFixed(2)} € (${'including'.tr} taxes ${(item.tva! / 100)})",
+                    fontSize: mq.aspectRatio * 30,
+                    color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
               ),
             ),
           );
@@ -179,36 +192,44 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return containerDevis(
-      onPressed: () {
-        Get.to(() => const AjouterUnArticleScreen(), transition: Transition.downToUp);
-      },
-      title: 'Ajouter un article',
-      isUnderLine: true,
-      endIndent: mq.width * 0.33,
-      titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-      iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
-      subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor
-    );
+        onPressed: () {
+          Get.to(() => const AjouterUnArticleScreen(), transition: Transition.downToUp);
+        },
+        title: 'add_item'.tr,
+        isUnderLine: true,
+        endIndent: mq.width * 0.33,
+        titleColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+        iconColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
+        subTitleColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor);
   }
 
-  Widget _buildSummary(double sousTotal, double tvaValue, double montantTotal, FactureController factureController, double averageTva) {
+  Widget _buildSummary(double sousTotal, double tvaValue, double montantTotal,
+      FactureController factureController, double averageTva) {
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return Column(
       children: [
-        _buildRow('Sous-total', '${sousTotal.toStringAsFixed(2)} €',
+        _buildRow(
+          'Sous-total',
+          '${sousTotal.toStringAsFixed(2)} €',
           txtColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
           valueColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
         ),
         SizedBox(height: mq.height * 0.02),
         SizedBox(height: mq.height * 0.01),
-        _buildRow('Tva ${averageTva.toStringAsFixed(2)}%', '${tvaValue.toStringAsFixed(2)} €',
+        _buildRow(
+          'Tva ${averageTva.toStringAsFixed(2)}%',
+          '${tvaValue.toStringAsFixed(2)} €',
           txtColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
           valueColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
         ),
         SizedBox(height: mq.height * 0.02),
-        _buildRow('Montant total', '${montantTotal.toStringAsFixed(2)} €', isBold: true, fontSize: mq.aspectRatio * 50,
+        _buildRow(
+          '${'amount'.tr} total',
+          '${montantTotal.toStringAsFixed(2)} €',
+          isBold: true,
+          fontSize: mq.aspectRatio * 50,
           txtColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
           valueColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
         ),
@@ -217,7 +238,11 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
   }
 
   Widget _buildRow(String label, String value,
-      {bool isBold = false, double? fontSize, bool hasUnderLine = false, required Color txtColor, required Color valueColor}) {
+      {bool isBold = false,
+      double? fontSize,
+      bool hasUnderLine = false,
+      required Color txtColor,
+      required Color valueColor}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -247,9 +272,9 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
       width: mq.width,
       height: mq.height * 0.2,
       decoration: BoxDecoration(
-        border: Border.all(color: isLightTheme ? ColorsTheme.lightGreyColor : ColorsTheme.darkGreyColor),
-        color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor
-      ),
+          border: Border.all(
+              color: isLightTheme ? ColorsTheme.lightGreyColor : ColorsTheme.darkGreyColor),
+          color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor),
       child: Column(
         children: [
           Container(
@@ -262,8 +287,7 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: mq.height * 0.05, horizontal: mq.width * 0.01),
+            padding: EdgeInsets.symmetric(vertical: mq.height * 0.05, horizontal: mq.width * 0.01),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -273,12 +297,11 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
                     child: Padding(
                       padding: EdgeInsets.only(left: mq.width * 0.08),
                       child: boldText(
-                        text: 'Aperçu',
-                        isUnderLine: true,
-                        fontSize: mq.aspectRatio * 40,
-                        endIndent: mq.width * 0.13,
-                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor
-                      ),
+                          text: 'preview'.tr,
+                          isUnderLine: true,
+                          fontSize: mq.aspectRatio * 40,
+                          endIndent: mq.width * 0.13,
+                          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
                     ),
                   ),
                 ),
@@ -286,7 +309,7 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
                   width: mq.width * 0.6,
                   height: mq.height * 0.06,
                   child: bottomButtonInScreen(
-                    text: widget.isDevis ? 'Continuer' : 'Finaliser',
+                    text: widget.isDevis ? 'continue'.tr : 'finish'.tr,
                     onPressed: () {
                       Get.to(() => const FinaliserScreen());
                     },
@@ -320,34 +343,19 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _bottomSheetItems(
-                Assets.iconsArticles,
-                'Format du prix',
-                () {
-                  Get.back();
-                  Get.to(() => const FormatDuPrix());
-                },
-                isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
-              _bottomSheetItems(
-                Assets.iconsPersonnaliser,
-                'Personnaliser la facture',
-                () {
-                  Get.back();
-                  Get.to(() => const PersonalizationScreen());
-                },
-                isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
-              _bottomSheetItems(
-                Assets.iconsClear,
-                'Effacer les éléments',
-                () {
-                  factureController.clearItems();
-                  factureController.resetSelectedClient();
-                  Get.back();
-                },
-                isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
-              ),
+              _bottomSheetItems(Assets.iconsArticles, 'price_format'.tr, () {
+                Get.back();
+                Get.to(() => const FormatDuPrix());
+              }, isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+              _bottomSheetItems(Assets.iconsPersonnaliser, 'customize_invoice'.tr, () {
+                Get.back();
+                Get.to(() => const PersonalizationScreen());
+              }, isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+              _bottomSheetItems(Assets.iconsClear, 'clear_items'.tr, () {
+                factureController.clearItems();
+                factureController.resetSelectedClient();
+                Get.back();
+              }, isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
             ],
           ),
         );
@@ -357,9 +365,17 @@ class _CreerUnDevisAndFactureState extends State<CreerUnDevisAndFacture> {
 
   Widget _bottomSheetItems(String icon, String text, VoidCallback onTap, Color color) {
     return ListTile(
-      leading: Image.asset(icon, height: mq.height * 0.028, color: color,),
-      title: normalText(text: text, color: color, fontSize: mq.aspectRatio *40),
-      trailing: Icon(Icons.arrow_forward_ios_rounded, size: mq.aspectRatio * 40, color: color,),
+      leading: Image.asset(
+        icon,
+        height: mq.height * 0.028,
+        color: color,
+      ),
+      title: normalText(text: text, color: color, fontSize: mq.aspectRatio * 40),
+      trailing: Icon(
+        Icons.arrow_forward_ios_rounded,
+        size: mq.aspectRatio * 40,
+        color: color,
+      ),
       onTap: onTap,
     );
   }

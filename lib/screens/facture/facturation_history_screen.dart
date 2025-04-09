@@ -37,7 +37,7 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
     // Refresh data when the screen is initialized
     WidgetsBinding.instance.addPostFrameCallback((_) {
       // Call the method to refresh the facture history here
-      factureController.loadFactureHistory().then((_){
+      factureController.loadFactureHistory().then((_) {
         // After loading, calculate monthly totals
         monthlySummaryController.calculateMonthlyTotals();
       });
@@ -50,7 +50,7 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
       initialDate: formattedDate.dateTime,
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
-      locale: const Locale('fr'), // Set locale to French
+      locale: Get.locale, // Set locale to French
     );
 
     if (pickedDate != null) {
@@ -62,13 +62,14 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final double monthlyTotal = monthlySummaryController.getMonthlyTotalForDate(formattedDate.dateTime);
+    final double monthlyTotal =
+        monthlySummaryController.getMonthlyTotalForDate(formattedDate.dateTime);
     final ThemeController themeController = Get.find<ThemeController>();
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Toutes les Factures',
+        title: 'all_invoices'.tr,
         hasLeading: true,
         iconLeading: Icons.arrow_back_ios_new_rounded,
         onPressedLeading: () {
@@ -76,7 +77,7 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
         },
         hasActions: true,
         textAction: 'delete',
-        onPressedAction: ()=> factureController.clearFactureDetails(),
+        onPressedAction: () => factureController.clearFactureDetails(),
       ),
       body: Container(
         width: mq.width,
@@ -90,13 +91,14 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
               children: [
                 GestureDetector(
                   onTap: _selectMonthYear,
-                  child: boldText(text: DateFormat('MMMM yyyy', 'fr').format(formattedDate.dateTime),
+                  child: boldText(
+                    text: DateFormat('MMMM yyyy', 'fr').format(formattedDate.dateTime),
                     color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor,
                   ),
                 ),
-                boldText(text: "Total pour le mois: ${monthlyTotal.toStringAsFixed(2)} €",
-                  color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor
-                ),
+                boldText(
+                    text: "${'tot_month'.tr}: ${monthlyTotal.toStringAsFixed(2)} €",
+                    color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
                 const Divider(),
                 Obx(() {
                   // Filter invoices for the selected month and year
@@ -108,8 +110,11 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
 
                   // Check if filteredFactures is empty
                   if (filteredFactures.isEmpty) {
-                    return Center(child: boldText(text: "Aucune facture disponible",
-                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor));
+                    return Center(
+                        child: boldText(
+                            text: "no_invoice".tr,
+                            color:
+                                isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor));
                   }
 
                   log("Filtering for: ${formattedDate.dateTime.year}-${formattedDate.dateTime.month}");
@@ -120,9 +125,10 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
                     itemCount: filteredFactures.length, // Use filteredFactures length here
                     reverse: true,
                     itemBuilder: (context, index) {
-                      final factures = filteredFactures[index]; // Get the facture from filteredFactures
+                      final factures =
+                          filteredFactures[index]; // Get the facture from filteredFactures
                       return GestureDetector(
-                        onTap: () =>Get.to(() => FactureHistoryDetails(facture: factures)),
+                        onTap: () => Get.to(() => FactureHistoryDetails(facture: factures)),
                         child: SizedBox(
                           width: mq.width,
                           child: Column(
@@ -133,26 +139,38 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      boldText(text: factures.invoiceNumber, fontSize: mq.aspectRatio * 40,
-                                        color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor
-                                      ),
+                                      boldText(
+                                          text: factures.invoiceNumber,
+                                          fontSize: mq.aspectRatio * 40,
+                                          color: isLightTheme
+                                              ? ColorsTheme.blackColor
+                                              : ColorsTheme.whiteColor),
                                       Container(
-                                        padding: EdgeInsets.only(left: mq.width * 0.04, right: mq.width * 0.07),
+                                        padding: EdgeInsets.only(
+                                            left: mq.width * 0.04, right: mq.width * 0.07),
                                         constraints: BoxConstraints(
                                           maxWidth: mq.width * 0.53,
                                         ),
                                         child: Container(
-                                          constraints:BoxConstraints(
+                                          constraints: BoxConstraints(
                                             maxWidth: mq.width * 0.37,
                                           ),
-                                          child: normalText(text: factures.clientDetails!.name.toUpperCase(), fontSize: mq.aspectRatio * 40,
-                                              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                                          child: normalText(
+                                              text: factures.clientDetails!.name.toUpperCase(),
+                                              fontSize: mq.aspectRatio * 40,
+                                              color: isLightTheme
+                                                  ? ColorsTheme.blackColor
+                                                  : ColorsTheme.whiteColor),
                                         ),
                                       ),
                                     ],
                                   ),
-                                  boldText(text: "${factures.montantTotal.toStringAsFixed(2)} €", fontSize: mq.aspectRatio * 45,
-                                      color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+                                  boldText(
+                                      text: "${factures.montantTotal.toStringAsFixed(2)} €",
+                                      fontSize: mq.aspectRatio * 45,
+                                      color: isLightTheme
+                                          ? ColorsTheme.blackColor
+                                          : ColorsTheme.whiteColor),
                                 ],
                               ),
                               Row(
@@ -161,14 +179,20 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
                                     width: mq.aspectRatio * 10,
                                     height: mq.aspectRatio * 10,
                                     decoration: BoxDecoration(
-                                      color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
+                                      color: isLightTheme
+                                          ? ColorsTheme.darkGreyColor
+                                          : ColorsTheme.lightGreyColor,
                                       shape: BoxShape.circle,
                                     ),
                                   ),
                                   SizedBox(width: mq.width * 0.02),
-                                  thinText(text: FormattedDate(factures.dateEmission).formattedDayShortMonth,
+                                  thinText(
+                                      text: FormattedDate(factures.dateEmission)
+                                          .formattedDayShortMonth,
                                       fontSize: mq.aspectRatio * 40,
-                                      color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor),
+                                      color: isLightTheme
+                                          ? ColorsTheme.darkGreyColor
+                                          : ColorsTheme.lightGreyColor),
                                 ],
                               ),
                               const Divider(),
@@ -188,7 +212,7 @@ class _FacturationHistoryScreenState extends State<FacturationHistoryScreen> {
         width: mq.width,
         color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
         child: bottomButtonInScreen(
-          text: 'Créer une facture',
+          text: 'create_invoice'.tr,
           bgColor: isLightTheme ? ColorsTheme.blueColor : ColorsTheme.orangeColor,
           horizontal: mq.width * 0.1,
           top: mq.height * 0.005,

@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 class FormatDuPrix extends StatelessWidget {
   const FormatDuPrix({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     final FactureController factureController = Get.find<FactureController>();
@@ -20,12 +19,12 @@ class FormatDuPrix extends StatelessWidget {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Format du prix',
+        title: 'price_format'.tr,
         hasLeading: true,
         onPressedLeading: () => Get.back(),
         iconLeading: Icons.arrow_back_ios_new_rounded,
         hasActions: true,
-        onPressedAction: () async{
+        onPressedAction: () async {
           await factureController.saveSelectedPriceFormat();
           Get.back();
         },
@@ -39,29 +38,27 @@ class FormatDuPrix extends StatelessWidget {
         child: Column(
           children: [
             normalText(
-              text: "Choisissez d'afficher les prix des articles hors "
-                  "taxes ou toutes taxes comprises.",
-              fontSize: mq.aspectRatio * 35,
-              hasOverFlow: false,
-              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor
+                text: "price_note".tr,
+                fontSize: mq.aspectRatio * 35,
+                hasOverFlow: false,
+                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+            Obx(
+              () => _buildChoosingPrice(
+                  onTap: factureController.selectPrixHT,
+                  title: "${'price'.tr} HT",
+                  value: 'price_no_tax'.tr,
+                  isSelected: factureController.isPrixHTSelected.value,
+                  color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                  borderColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
             ),
-            Obx(() => _buildChoosingPrice(
-                onTap: factureController.selectPrixHT,
-                title: "Prix HT",
-                value: 'Afficher les prix hors taxes',
-                isSelected: factureController.isPrixHTSelected.value,
-                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                borderColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor
-              ),
-            ),
-            Obx(() => _buildChoosingPrice(
-                onTap: factureController.selectPrixTTC,
-                title: "Prix TTC",
-                value: 'Afficher les prix toutes taxes comprises.',
-                isSelected: factureController.isPrixTTCSelected.value,
-                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
-                borderColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor
-              ),
+            Obx(
+              () => _buildChoosingPrice(
+                  onTap: factureController.selectPrixTTC,
+                  title: "${'price'.tr} TTC",
+                  value: 'price_with_tax'.tr,
+                  isSelected: factureController.isPrixTTCSelected.value,
+                  color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor,
+                  borderColor: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.orangeColor),
             ),
           ],
         ),

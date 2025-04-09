@@ -102,7 +102,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
       appBar: DefaultAppbar(
         title: 'Clients',
         hasLeading: true,
-        textLeading: 'Fremer',
+        textLeading: 'close'.tr,
         onPressedLeading: () => Get.back(),
       ),
       backgroundColor: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
@@ -141,12 +141,18 @@ class _ClientsScreenState extends State<ClientsScreen> {
         controller: _searchController,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(vertical: mq.height * 0.01),
-          hintText: 'Recherche',
-          hintStyle: TextStyle(color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor, fontSize: mq.aspectRatio * 45),
-          border: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.circular(mq.aspectRatio * 30)),
+          hintText: 'research'.tr,
+          hintStyle: TextStyle(
+              color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
+              fontSize: mq.aspectRatio * 45),
+          border: OutlineInputBorder(
+              borderSide: BorderSide.none,
+              borderRadius: BorderRadius.circular(mq.aspectRatio * 30)),
           filled: true,
           fillColor: isLightTheme ? Colors.grey.shade200 : ColorsTheme.darkGreyColor,
-          prefixIcon: Icon(CupertinoIcons.search, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor, size: mq.aspectRatio * 60),
+          prefixIcon: Icon(CupertinoIcons.search,
+              color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
+              size: mq.aspectRatio * 60),
         ),
       ),
     );
@@ -168,15 +174,15 @@ class _ClientsScreenState extends State<ClientsScreen> {
     return _groupedContacts.isEmpty
         ? _buildNoResultsWidget()
         : ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: _groupedContacts.keys.length,
-      itemBuilder: (context, index) {
-        String firstLetter = _groupedContacts.keys.elementAt(index);
-        List<ContactsModel> contacts = _groupedContacts[firstLetter]!;
-        return _buildContactSection(firstLetter, contacts);
-      },
-    );
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: _groupedContacts.keys.length,
+            itemBuilder: (context, index) {
+              String firstLetter = _groupedContacts.keys.elementAt(index);
+              List<ContactsModel> contacts = _groupedContacts[firstLetter]!;
+              return _buildContactSection(firstLetter, contacts);
+            },
+          );
   }
 
   Widget _buildNoResultsWidget() {
@@ -188,7 +194,9 @@ class _ClientsScreenState extends State<ClientsScreen> {
         padding: EdgeInsets.only(top: mq.height * 0.2),
         child: Text(
           'No results found',
-          style: TextStyle(fontSize: mq.aspectRatio * 45, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+          style: TextStyle(
+              fontSize: mq.aspectRatio * 45,
+              color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
         ),
       ),
     );
@@ -212,7 +220,10 @@ class _ClientsScreenState extends State<ClientsScreen> {
       padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05, vertical: mq.height * 0.01),
       width: mq.width,
       color: isLightTheme ? Colors.grey.shade300 : ColorsTheme.darkGreyColor,
-      child: boldText(text: letter, fontSize: mq.aspectRatio * 45, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+      child: boldText(
+          text: letter,
+          fontSize: mq.aspectRatio * 45,
+          color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
     );
   }
 
@@ -224,11 +235,20 @@ class _ClientsScreenState extends State<ClientsScreen> {
       onTap: () => _selectClient(contact), // Update to include the selection callback
       child: ListTile(
         leading: CircleAvatar(child: Text(contact.name[0])),
-        title: boldText(text: contact.name.toUpperCase(), fontSize: mq.aspectRatio * 42, color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
-        subtitle: thinText(text: contact.address, fontSize: mq.aspectRatio * 35, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor),
+        title: boldText(
+            text: contact.name.toUpperCase(),
+            fontSize: mq.aspectRatio * 42,
+            color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
+        subtitle: thinText(
+            text: contact.address,
+            fontSize: mq.aspectRatio * 35,
+            color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor),
         trailing: IconButton(
           onPressed: () => _showContactOptions(contact),
-          icon: Icon(Icons.more_horiz_rounded, color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,),
+          icon: Icon(
+            Icons.more_horiz_rounded,
+            color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
+          ),
         ),
       ),
     );
@@ -248,7 +268,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
     final isLightTheme = themeController.themeMode.value == ThemeMode.light;
 
     return bottomButtonInScreen(
-      text: 'Ajouter un client',
+      text: 'add_customer'.tr,
       onPressed: () => Get.to(NewClient(clientsList: _contacts)),
       horizontal: mq.width * 0.05,
       top: mq.height * 0.01,
@@ -282,20 +302,19 @@ class _ClientsScreenState extends State<ClientsScreen> {
 
     return Container(
       margin: EdgeInsets.symmetric(horizontal: mq.width * 0.03),
-      decoration: BoxDecoration(color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
-        borderRadius: BorderRadius.circular(mq.aspectRatio * 20)),
+      decoration: BoxDecoration(
+          color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
+          borderRadius: BorderRadius.circular(mq.aspectRatio * 20)),
       child: Column(
         children: [
-          _buildOption('Modifier', () {
-              Get.back();
-              _modifyContact(contact);
-            },
-            textColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor
-          ),
+          _buildOption('edit'.tr, () {
+            Get.back();
+            _modifyContact(contact);
+          }, textColor: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.whiteColor),
           Divider(
             color: isLightTheme ? ColorsTheme.darkGreyColor : ColorsTheme.lightGreyColor,
           ),
-          _buildOption('Suppimer', () {
+          _buildOption('delete'.tr, () {
             Get.back();
             _deleteContact(contact);
           }, textColor: Colors.red),
@@ -324,21 +343,24 @@ class _ClientsScreenState extends State<ClientsScreen> {
       onTap: () => Get.back(),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: mq.width * 0.03, vertical: mq.height * 0.01),
-        decoration: BoxDecoration(color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
-          borderRadius: BorderRadius.circular(mq.aspectRatio * 20)),
+        decoration: BoxDecoration(
+            color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.darkGreyColor,
+            borderRadius: BorderRadius.circular(mq.aspectRatio * 20)),
         child: Container(
-          padding: EdgeInsets.symmetric(vertical: mq.height * 0.02),
-          alignment: Alignment.center,
-          width: mq.width,
-          child: boldText(text: 'Annuler', fontSize: mq.aspectRatio * 50 , color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor)
-        ),
+            padding: EdgeInsets.symmetric(vertical: mq.height * 0.02),
+            alignment: Alignment.center,
+            width: mq.width,
+            child: boldText(
+                text: 'cancel'.tr,
+                fontSize: mq.aspectRatio * 50,
+                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor)),
       ),
     );
   }
 
   void _modifyContact(ContactsModel contact) {
     Get.to(NewClient(clientsList: _contacts, existingClient: contact));
-    log("Modify ${contact.name}");
+    log("${'edit'.tr} ${contact.name}");
   }
 
   void _deleteContact(ContactsModel contact) {

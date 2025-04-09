@@ -29,7 +29,8 @@ class _DocumentDateState extends State<DocumentDate> {
   void initState() {
     super.initState();
     facture.loadFactureDetails();
-    numController.text = facture.facture.value.invoiceNumber; // Initialize with current year and invoice number
+    numController.text =
+        facture.facture.value.invoiceNumber; // Initialize with current year and invoice number
     _initializeDateEchance();
 
     // Listen for focus changes to scroll into view
@@ -56,9 +57,9 @@ class _DocumentDateState extends State<DocumentDate> {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Détails',
+        title: 'details'.tr,
         hasLeading: true,
-        textLeading: 'Fermer',
+        textLeading: 'close'.tr,
         onPressedLeading: () => Get.back(),
         hasActions: true,
         textAction: 'Ok',
@@ -79,7 +80,7 @@ class _DocumentDateState extends State<DocumentDate> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 customTextField(
-                  title: 'Numéro du document',
+                  title: 'doc_num'.tr,
                   controller: numController,
                   hint: '',
                   focusNode: _focusNode,
@@ -91,13 +92,15 @@ class _DocumentDateState extends State<DocumentDate> {
                   },
                 ),
                 CustomDropDown(
-                  title: 'Condition de paiements',
-                  selectedValue: 'Due dans $_selectedConditions jours',
-                  options: _conditions.map((c) => 'Due dans $c jours').toList(),
+                  title: 'payment_cond'.tr,
+                  selectedValue: '${'within'.tr} $_selectedConditions ${'days'.tr}',
+                  options: _conditions.map((c) => '${'within'.tr} $c ${'days'.tr}').toList(),
                   onSelected: (value) {
                     setState(() {
                       _selectedConditions = int.parse(value
-                        .replaceAll('Due dans ', '').replaceAll(' jours', '').trim());
+                          .replaceAll('${'within'.tr} ', '')
+                          .replaceAll(' ${'days'.tr}', '')
+                          .trim());
                       _updateDateEchance();
                     });
                   },
@@ -110,8 +113,8 @@ class _DocumentDateState extends State<DocumentDate> {
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: mq.height * 0.03),
                   child: selectedDate(
-                    "Date d'emission",
-                        () => _selectDate(context, true),
+                    "issue_date".tr,
+                    () => _selectDate(context, true),
                     FormattedDate(facture.facture.value.dateEmission)
                         .formattedDayShortMonth
                         .toString(),
@@ -121,8 +124,8 @@ class _DocumentDateState extends State<DocumentDate> {
 
                 // Select dateEchance
                 selectedDate(
-                  "Date d'échéance",
-                      () => _selectDate(context, false),
+                  "due_date".tr,
+                  () => _selectDate(context, false),
                   FormattedDate(facture.facture.value.dateEchance)
                       .formattedDayShortMonth
                       .toString(),
@@ -140,10 +143,8 @@ class _DocumentDateState extends State<DocumentDate> {
     await selectDateTime(
       context,
       this,
-      isEmissionDate
-          ? facture.facture.value.dateEmission
-          : facture.facture.value.dateEchance,
-          (selectedDate) {
+      isEmissionDate ? facture.facture.value.dateEmission : facture.facture.value.dateEchance,
+      (selectedDate) {
         setState(() {
           if (isEmissionDate) {
             facture.updateDateEmission(selectedDate);
@@ -159,22 +160,21 @@ class _DocumentDateState extends State<DocumentDate> {
 
   // Method to initialize dateEchance based on initial dateEmission and selected conditions
   void _initializeDateEchance() {
-    facture.updateDateEchance(facture.facture.value.dateEmission
-        .add(Duration(days: _selectedConditions)));
+    facture.updateDateEchance(
+        facture.facture.value.dateEmission.add(Duration(days: _selectedConditions)));
   }
 
   // Method to update dateEchance based on dateEmission and selected conditions
   void _updateDateEchance() {
-    DateTime newDateEchance = facture.facture.value.dateEmission
-        .add(Duration(days: _selectedConditions));
+    DateTime newDateEchance =
+        facture.facture.value.dateEmission.add(Duration(days: _selectedConditions));
     facture.updateDateEchance(newDateEchance);
   }
 
   // Method to update selectedConditions based on the difference between dateEmission and dateEchance
   void _updateSelectedConditions() {
-    final int difference = facture.facture.value.dateEchance
-        .difference(facture.facture.value.dateEmission)
-        .inDays;
+    final int difference =
+        facture.facture.value.dateEchance.difference(facture.facture.value.dateEmission).inDays;
     setState(() {
       _selectedConditions = difference;
     });

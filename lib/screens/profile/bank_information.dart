@@ -27,7 +27,7 @@ class BankInformation extends StatelessWidget {
 
     return Scaffold(
       appBar: DefaultAppbar(
-        title: 'Informations bancaires',
+        title: 'bank_information'.tr,
         hasLeading: true,
         iconLeading: Icons.arrow_back_ios_new_rounded,
         onPressedLeading: () {
@@ -36,7 +36,6 @@ class BankInformation extends StatelessWidget {
         hasActions: true,
         textAction: 'OK',
         onPressedAction: () async {
-
           // Save the entered profile details when "OK" is pressed
           final updatedProfile = ProfileModel(
             name: profile.name,
@@ -63,36 +62,38 @@ class BankInformation extends StatelessWidget {
         height: mq.height,
         color: isLightTheme ? ColorsTheme.whiteColor : ColorsTheme.blackColor,
         child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: mq.width * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: mq.width * 0.05),
           child: SingleChildScrollView(
             child: Column(
               children: [
                 SizedBox(height: mq.height * 0.05),
-                normalText(text: "Ces informations apparaîtront sur votre rapport de transaction, "
-                  "ainsi que sur vos reçus. Ces données vous permettent d'identifier vos coordonnées bancaires. "
-                  "Nous vous invitons à contacter le service client si vous souhaitez les modifier."
-                  ,hasOverFlow: false, fontSize: mq.aspectRatio * 40,
-                color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
+                normalText(
+                    text: "bank_info_note".tr,
+                    hasOverFlow: false,
+                    fontSize: mq.aspectRatio * 40,
+                    color: isLightTheme ? ColorsTheme.blackColor : ColorsTheme.orangeColor),
                 SizedBox(height: mq.height * 0.02),
-                Obx(() {
-                  ibanController.text = profileController.profileDetails.value.iban ?? '';
-                  swiftController.text = profileController.profileDetails.value.swift ?? '';
+                Obx(
+                  () {
+                    ibanController.text = profileController.profileDetails.value.iban ?? '';
+                    swiftController.text = profileController.profileDetails.value.swift ?? '';
 
-                  return Column(
-                    children: [
-                      customTextField(
-                        title: 'IBAN:',
-                        controller: ibanController,
-                        hint: '',
-                      ),
-                      customTextField(
-                        title: 'BIC-ADRESSE SWIFT:',
-                        controller: swiftController,
-                        hint: '',
-                      ),
-                    ],
-                  );
-                },),
+                    return Column(
+                      children: [
+                        customTextField(
+                          title: 'IBAN:',
+                          controller: ibanController,
+                          hint: '',
+                        ),
+                        customTextField(
+                          title: 'BIC-ADRESSE SWIFT:',
+                          controller: swiftController,
+                          hint: '',
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ],
             ),
           ),
